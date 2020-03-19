@@ -1,4 +1,4 @@
-Terminaux inutilisés dans la grammaire
+Terminals which are not used
 
    tVOID
    tPOINT
@@ -16,7 +16,7 @@ Terminaux inutilisés dans la grammaire
    tFALSE
 
 
-Grammaire
+Grammar
 
     0 $accept: s $end
 
@@ -28,7 +28,7 @@ Grammaire
     4 BODY: CreateVAR BODY
     5     | Affectation BODY
     6     | tPRINTF tOP tVAR tCP tPV BODY
-    7     | %empty
+    7     | /* empty */
 
     8 TYPE: tINT
     9     | tBOOL
@@ -56,7 +56,7 @@ Grammaire
    26   | OPERATION
 
 
-Terminaux, suivis des règles où ils apparaissent
+Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
@@ -96,384 +96,384 @@ tTRUE (290)
 tFALSE (291)
 
 
-Non-terminaux, suivis des règles où ils apparaissent
+Nonterminals, with rules where they appear
 
 $accept (37)
-    à gauche: 0
+    on left: 0
 s (38)
-    à gauche: 1, à droite: 0
+    on left: 1, on right: 0
 INT (39)
-    à gauche: 2 3, à droite: 1
+    on left: 2 3, on right: 1
 BODY (40)
-    à gauche: 4 5 6 7, à droite: 1 4 5 6
+    on left: 4 5 6 7, on right: 1 4 5 6
 TYPE (41)
-    à gauche: 8 9 10 11, à droite: 12 13 14
+    on left: 8 9 10 11, on right: 12 13 14
 CreateVAR (42)
-    à gauche: 12 13 14, à droite: 4
+    on left: 12 13 14, on right: 4
 SuiteVar (43)
-    à gauche: 15 16, à droite: 14 15
+    on left: 15 16, on right: 14 15
 Affectation (44)
-    à gauche: 17 18, à droite: 5
+    on left: 17 18, on right: 5
 OPERATION (45)
-    à gauche: 19 20 21 22, à droite: 18 26
+    on left: 19 20 21 22, on right: 18 26
 T1 (46)
-    à gauche: 23 24 25 26, à droite: 19 20 21 22 23
+    on left: 23 24 25 26, on right: 19 20 21 22 23
 
 
-État 0
+state 0
 
     0 $accept: . s $end
 
-    tINT  décalage et aller à l'état 1
+    tINT  shift, and go to state 1
 
-    s  aller à l'état 2
+    s  go to state 2
 
 
-État 1
+state 1
 
     1 s: tINT . tMAIN tOP tCP tOB BODY tRETURN INT tPV tCB
 
-    tMAIN  décalage et aller à l'état 3
+    tMAIN  shift, and go to state 3
 
 
-État 2
+state 2
 
     0 $accept: s . $end
 
-    $end  décalage et aller à l'état 4
+    $end  shift, and go to state 4
 
 
-État 3
+state 3
 
     1 s: tINT tMAIN . tOP tCP tOB BODY tRETURN INT tPV tCB
 
-    tOP  décalage et aller à l'état 5
+    tOP  shift, and go to state 5
 
 
-État 4
+state 4
 
     0 $accept: s $end .
 
-    $défaut  accepter
+    $default  accept
 
 
-État 5
+state 5
 
     1 s: tINT tMAIN tOP . tCP tOB BODY tRETURN INT tPV tCB
 
-    tCP  décalage et aller à l'état 6
+    tCP  shift, and go to state 6
 
 
-État 6
+state 6
 
     1 s: tINT tMAIN tOP tCP . tOB BODY tRETURN INT tPV tCB
 
-    tOB  décalage et aller à l'état 7
+    tOB  shift, and go to state 7
 
 
-État 7
+state 7
 
     1 s: tINT tMAIN tOP tCP tOB . BODY tRETURN INT tPV tCB
 
-    tINT     décalage et aller à l'état 8
-    tFLOAT   décalage et aller à l'état 9
-    tBOOL    décalage et aller à l'état 10
-    tPRINTF  décalage et aller à l'état 11
-    tVAR     décalage et aller à l'état 12
-    tDOUBLE  décalage et aller à l'état 13
+    tINT     shift, and go to state 8
+    tFLOAT   shift, and go to state 9
+    tBOOL    shift, and go to state 10
+    tPRINTF  shift, and go to state 11
+    tVAR     shift, and go to state 12
+    tDOUBLE  shift, and go to state 13
 
-    $défaut  réduction par utilisation de la règle 7 (BODY)
+    $default  reduce using rule 7 (BODY)
 
-    BODY         aller à l'état 14
-    TYPE         aller à l'état 15
-    CreateVAR    aller à l'état 16
-    Affectation  aller à l'état 17
+    BODY         go to state 14
+    TYPE         go to state 15
+    CreateVAR    go to state 16
+    Affectation  go to state 17
 
 
-État 8
+state 8
 
     8 TYPE: tINT .
 
-    $défaut  réduction par utilisation de la règle 8 (TYPE)
+    $default  reduce using rule 8 (TYPE)
 
 
-État 9
+state 9
 
    10 TYPE: tFLOAT .
 
-    $défaut  réduction par utilisation de la règle 10 (TYPE)
+    $default  reduce using rule 10 (TYPE)
 
 
-État 10
+state 10
 
     9 TYPE: tBOOL .
 
-    $défaut  réduction par utilisation de la règle 9 (TYPE)
+    $default  reduce using rule 9 (TYPE)
 
 
-État 11
+state 11
 
     6 BODY: tPRINTF . tOP tVAR tCP tPV BODY
 
-    tOP  décalage et aller à l'état 18
+    tOP  shift, and go to state 18
 
 
-État 12
+state 12
 
    17 Affectation: tVAR . tAFFECT tNUMBER tPV
    18            | tVAR . tAFFECT OPERATION tPV
 
-    tAFFECT  décalage et aller à l'état 19
+    tAFFECT  shift, and go to state 19
 
 
-État 13
+state 13
 
    11 TYPE: tDOUBLE .
 
-    $défaut  réduction par utilisation de la règle 11 (TYPE)
+    $default  reduce using rule 11 (TYPE)
 
 
-État 14
+state 14
 
     1 s: tINT tMAIN tOP tCP tOB BODY . tRETURN INT tPV tCB
 
-    tRETURN  décalage et aller à l'état 20
+    tRETURN  shift, and go to state 20
 
 
-État 15
+state 15
 
    12 CreateVAR: TYPE . tVAR tPV
    13          | TYPE . tVAR tAFFECT tNUMBER tPV
    14          | TYPE . tVAR tVIRGULE SuiteVar
 
-    tVAR  décalage et aller à l'état 21
+    tVAR  shift, and go to state 21
 
 
-État 16
+state 16
 
     4 BODY: CreateVAR . BODY
 
-    tINT     décalage et aller à l'état 8
-    tFLOAT   décalage et aller à l'état 9
-    tBOOL    décalage et aller à l'état 10
-    tPRINTF  décalage et aller à l'état 11
-    tVAR     décalage et aller à l'état 12
-    tDOUBLE  décalage et aller à l'état 13
+    tINT     shift, and go to state 8
+    tFLOAT   shift, and go to state 9
+    tBOOL    shift, and go to state 10
+    tPRINTF  shift, and go to state 11
+    tVAR     shift, and go to state 12
+    tDOUBLE  shift, and go to state 13
 
-    $défaut  réduction par utilisation de la règle 7 (BODY)
+    $default  reduce using rule 7 (BODY)
 
-    BODY         aller à l'état 22
-    TYPE         aller à l'état 15
-    CreateVAR    aller à l'état 16
-    Affectation  aller à l'état 17
+    BODY         go to state 22
+    TYPE         go to state 15
+    CreateVAR    go to state 16
+    Affectation  go to state 17
 
 
-État 17
+state 17
 
     5 BODY: Affectation . BODY
 
-    tINT     décalage et aller à l'état 8
-    tFLOAT   décalage et aller à l'état 9
-    tBOOL    décalage et aller à l'état 10
-    tPRINTF  décalage et aller à l'état 11
-    tVAR     décalage et aller à l'état 12
-    tDOUBLE  décalage et aller à l'état 13
+    tINT     shift, and go to state 8
+    tFLOAT   shift, and go to state 9
+    tBOOL    shift, and go to state 10
+    tPRINTF  shift, and go to state 11
+    tVAR     shift, and go to state 12
+    tDOUBLE  shift, and go to state 13
 
-    $défaut  réduction par utilisation de la règle 7 (BODY)
+    $default  reduce using rule 7 (BODY)
 
-    BODY         aller à l'état 23
-    TYPE         aller à l'état 15
-    CreateVAR    aller à l'état 16
-    Affectation  aller à l'état 17
+    BODY         go to state 23
+    TYPE         go to state 15
+    CreateVAR    go to state 16
+    Affectation  go to state 17
 
 
-État 18
+state 18
 
     6 BODY: tPRINTF tOP . tVAR tCP tPV BODY
 
-    tVAR  décalage et aller à l'état 24
+    tVAR  shift, and go to state 24
 
 
-État 19
+state 19
 
    17 Affectation: tVAR tAFFECT . tNUMBER tPV
    18            | tVAR tAFFECT . OPERATION tPV
 
-    tNUMBER  décalage et aller à l'état 25
-    tOP      décalage et aller à l'état 26
-    tVAR     décalage et aller à l'état 27
+    tNUMBER  shift, and go to state 25
+    tOP      shift, and go to state 26
+    tVAR     shift, and go to state 27
 
-    OPERATION  aller à l'état 28
-    T1         aller à l'état 29
+    OPERATION  go to state 28
+    T1         go to state 29
 
 
-État 20
+state 20
 
     1 s: tINT tMAIN tOP tCP tOB BODY tRETURN . INT tPV tCB
 
-    tNUMBER  décalage et aller à l'état 30
-    tVAR     décalage et aller à l'état 31
+    tNUMBER  shift, and go to state 30
+    tVAR     shift, and go to state 31
 
-    INT  aller à l'état 32
+    INT  go to state 32
 
 
-État 21
+state 21
 
    12 CreateVAR: TYPE tVAR . tPV
    13          | TYPE tVAR . tAFFECT tNUMBER tPV
    14          | TYPE tVAR . tVIRGULE SuiteVar
 
-    tPV       décalage et aller à l'état 33
-    tVIRGULE  décalage et aller à l'état 34
-    tAFFECT   décalage et aller à l'état 35
+    tPV       shift, and go to state 33
+    tVIRGULE  shift, and go to state 34
+    tAFFECT   shift, and go to state 35
 
 
-État 22
+state 22
 
     4 BODY: CreateVAR BODY .
 
-    $défaut  réduction par utilisation de la règle 4 (BODY)
+    $default  reduce using rule 4 (BODY)
 
 
-État 23
+state 23
 
     5 BODY: Affectation BODY .
 
-    $défaut  réduction par utilisation de la règle 5 (BODY)
+    $default  reduce using rule 5 (BODY)
 
 
-État 24
+state 24
 
     6 BODY: tPRINTF tOP tVAR . tCP tPV BODY
 
-    tCP  décalage et aller à l'état 36
+    tCP  shift, and go to state 36
 
 
-État 25
+state 25
 
    17 Affectation: tVAR tAFFECT tNUMBER . tPV
    24 T1: tNUMBER .
 
-    tPV  décalage et aller à l'état 37
+    tPV  shift, and go to state 37
 
-    $défaut  réduction par utilisation de la règle 24 (T1)
+    $default  reduce using rule 24 (T1)
 
 
-État 26
+state 26
 
    23 T1: tOP . T1 tCP
 
-    tNUMBER  décalage et aller à l'état 38
-    tOP      décalage et aller à l'état 26
-    tVAR     décalage et aller à l'état 27
+    tNUMBER  shift, and go to state 38
+    tOP      shift, and go to state 26
+    tVAR     shift, and go to state 27
 
-    OPERATION  aller à l'état 39
-    T1         aller à l'état 40
+    OPERATION  go to state 39
+    T1         go to state 40
 
 
-État 27
+state 27
 
    25 T1: tVAR .
 
-    $défaut  réduction par utilisation de la règle 25 (T1)
+    $default  reduce using rule 25 (T1)
 
 
-État 28
+state 28
 
    18 Affectation: tVAR tAFFECT OPERATION . tPV
    26 T1: OPERATION .
 
-    tPV  décalage et aller à l'état 41
+    tPV  shift, and go to state 41
 
-    $défaut  réduction par utilisation de la règle 26 (T1)
+    $default  reduce using rule 26 (T1)
 
 
-État 29
+state 29
 
    19 OPERATION: T1 . tADD T1
    20          | T1 . tMUL T1
    21          | T1 . tDIV T1
    22          | T1 . tSUB T1
 
-    tADD  décalage et aller à l'état 42
-    tMUL  décalage et aller à l'état 43
-    tSUB  décalage et aller à l'état 44
-    tDIV  décalage et aller à l'état 45
+    tADD  shift, and go to state 42
+    tMUL  shift, and go to state 43
+    tSUB  shift, and go to state 44
+    tDIV  shift, and go to state 45
 
 
-État 30
+state 30
 
     3 INT: tNUMBER .
 
-    $défaut  réduction par utilisation de la règle 3 (INT)
+    $default  reduce using rule 3 (INT)
 
 
-État 31
+state 31
 
     2 INT: tVAR .
 
-    $défaut  réduction par utilisation de la règle 2 (INT)
+    $default  reduce using rule 2 (INT)
 
 
-État 32
+state 32
 
     1 s: tINT tMAIN tOP tCP tOB BODY tRETURN INT . tPV tCB
 
-    tPV  décalage et aller à l'état 46
+    tPV  shift, and go to state 46
 
 
-État 33
+state 33
 
    12 CreateVAR: TYPE tVAR tPV .
 
-    $défaut  réduction par utilisation de la règle 12 (CreateVAR)
+    $default  reduce using rule 12 (CreateVAR)
 
 
-État 34
+state 34
 
    14 CreateVAR: TYPE tVAR tVIRGULE . SuiteVar
 
-    tVAR  décalage et aller à l'état 47
+    tVAR  shift, and go to state 47
 
-    SuiteVar  aller à l'état 48
+    SuiteVar  go to state 48
 
 
-État 35
+state 35
 
    13 CreateVAR: TYPE tVAR tAFFECT . tNUMBER tPV
 
-    tNUMBER  décalage et aller à l'état 49
+    tNUMBER  shift, and go to state 49
 
 
-État 36
+state 36
 
     6 BODY: tPRINTF tOP tVAR tCP . tPV BODY
 
-    tPV  décalage et aller à l'état 50
+    tPV  shift, and go to state 50
 
 
-État 37
+state 37
 
    17 Affectation: tVAR tAFFECT tNUMBER tPV .
 
-    $défaut  réduction par utilisation de la règle 17 (Affectation)
+    $default  reduce using rule 17 (Affectation)
 
 
-État 38
+state 38
 
    24 T1: tNUMBER .
 
-    $défaut  réduction par utilisation de la règle 24 (T1)
+    $default  reduce using rule 24 (T1)
 
 
-État 39
+state 39
 
    26 T1: OPERATION .
 
-    $défaut  réduction par utilisation de la règle 26 (T1)
+    $default  reduce using rule 26 (T1)
 
 
-État 40
+state 40
 
    19 OPERATION: T1 . tADD T1
    20          | T1 . tMUL T1
@@ -481,125 +481,125 @@ T1 (46)
    22          | T1 . tSUB T1
    23 T1: tOP T1 . tCP
 
-    tCP   décalage et aller à l'état 51
-    tADD  décalage et aller à l'état 42
-    tMUL  décalage et aller à l'état 43
-    tSUB  décalage et aller à l'état 44
-    tDIV  décalage et aller à l'état 45
+    tCP   shift, and go to state 51
+    tADD  shift, and go to state 42
+    tMUL  shift, and go to state 43
+    tSUB  shift, and go to state 44
+    tDIV  shift, and go to state 45
 
 
-État 41
+state 41
 
    18 Affectation: tVAR tAFFECT OPERATION tPV .
 
-    $défaut  réduction par utilisation de la règle 18 (Affectation)
+    $default  reduce using rule 18 (Affectation)
 
 
-État 42
+state 42
 
    19 OPERATION: T1 tADD . T1
 
-    tNUMBER  décalage et aller à l'état 38
-    tOP      décalage et aller à l'état 26
-    tVAR     décalage et aller à l'état 27
+    tNUMBER  shift, and go to state 38
+    tOP      shift, and go to state 26
+    tVAR     shift, and go to state 27
 
-    OPERATION  aller à l'état 39
-    T1         aller à l'état 52
+    OPERATION  go to state 39
+    T1         go to state 52
 
 
-État 43
+state 43
 
    20 OPERATION: T1 tMUL . T1
 
-    tNUMBER  décalage et aller à l'état 38
-    tOP      décalage et aller à l'état 26
-    tVAR     décalage et aller à l'état 27
+    tNUMBER  shift, and go to state 38
+    tOP      shift, and go to state 26
+    tVAR     shift, and go to state 27
 
-    OPERATION  aller à l'état 39
-    T1         aller à l'état 53
+    OPERATION  go to state 39
+    T1         go to state 53
 
 
-État 44
+state 44
 
    22 OPERATION: T1 tSUB . T1
 
-    tNUMBER  décalage et aller à l'état 38
-    tOP      décalage et aller à l'état 26
-    tVAR     décalage et aller à l'état 27
+    tNUMBER  shift, and go to state 38
+    tOP      shift, and go to state 26
+    tVAR     shift, and go to state 27
 
-    OPERATION  aller à l'état 39
-    T1         aller à l'état 54
+    OPERATION  go to state 39
+    T1         go to state 54
 
 
-État 45
+state 45
 
    21 OPERATION: T1 tDIV . T1
 
-    tNUMBER  décalage et aller à l'état 38
-    tOP      décalage et aller à l'état 26
-    tVAR     décalage et aller à l'état 27
+    tNUMBER  shift, and go to state 38
+    tOP      shift, and go to state 26
+    tVAR     shift, and go to state 27
 
-    OPERATION  aller à l'état 39
-    T1         aller à l'état 55
+    OPERATION  go to state 39
+    T1         go to state 55
 
 
-État 46
+state 46
 
     1 s: tINT tMAIN tOP tCP tOB BODY tRETURN INT tPV . tCB
 
-    tCB  décalage et aller à l'état 56
+    tCB  shift, and go to state 56
 
 
-État 47
+state 47
 
    15 SuiteVar: tVAR . tVIRGULE SuiteVar
    16         | tVAR . tPV
 
-    tPV       décalage et aller à l'état 57
-    tVIRGULE  décalage et aller à l'état 58
+    tPV       shift, and go to state 57
+    tVIRGULE  shift, and go to state 58
 
 
-État 48
+state 48
 
    14 CreateVAR: TYPE tVAR tVIRGULE SuiteVar .
 
-    $défaut  réduction par utilisation de la règle 14 (CreateVAR)
+    $default  reduce using rule 14 (CreateVAR)
 
 
-État 49
+state 49
 
    13 CreateVAR: TYPE tVAR tAFFECT tNUMBER . tPV
 
-    tPV  décalage et aller à l'état 59
+    tPV  shift, and go to state 59
 
 
-État 50
+state 50
 
     6 BODY: tPRINTF tOP tVAR tCP tPV . BODY
 
-    tINT     décalage et aller à l'état 8
-    tFLOAT   décalage et aller à l'état 9
-    tBOOL    décalage et aller à l'état 10
-    tPRINTF  décalage et aller à l'état 11
-    tVAR     décalage et aller à l'état 12
-    tDOUBLE  décalage et aller à l'état 13
+    tINT     shift, and go to state 8
+    tFLOAT   shift, and go to state 9
+    tBOOL    shift, and go to state 10
+    tPRINTF  shift, and go to state 11
+    tVAR     shift, and go to state 12
+    tDOUBLE  shift, and go to state 13
 
-    $défaut  réduction par utilisation de la règle 7 (BODY)
+    $default  reduce using rule 7 (BODY)
 
-    BODY         aller à l'état 60
-    TYPE         aller à l'état 15
-    CreateVAR    aller à l'état 16
-    Affectation  aller à l'état 17
+    BODY         go to state 60
+    TYPE         go to state 15
+    CreateVAR    go to state 16
+    Affectation  go to state 17
 
 
-État 51
+state 51
 
    23 T1: tOP T1 tCP .
 
-    $défaut  réduction par utilisation de la règle 23 (T1)
+    $default  reduce using rule 23 (T1)
 
 
-État 52
+state 52
 
    19 OPERATION: T1 . tADD T1
    19          | T1 tADD T1 .
@@ -607,13 +607,13 @@ T1 (46)
    21          | T1 . tDIV T1
    22          | T1 . tSUB T1
 
-    tMUL  décalage et aller à l'état 43
-    tDIV  décalage et aller à l'état 45
+    tMUL  shift, and go to state 43
+    tDIV  shift, and go to state 45
 
-    $défaut  réduction par utilisation de la règle 19 (OPERATION)
+    $default  reduce using rule 19 (OPERATION)
 
 
-État 53
+state 53
 
    19 OPERATION: T1 . tADD T1
    20          | T1 . tMUL T1
@@ -621,10 +621,10 @@ T1 (46)
    21          | T1 . tDIV T1
    22          | T1 . tSUB T1
 
-    $défaut  réduction par utilisation de la règle 20 (OPERATION)
+    $default  reduce using rule 20 (OPERATION)
 
 
-État 54
+state 54
 
    19 OPERATION: T1 . tADD T1
    20          | T1 . tMUL T1
@@ -632,13 +632,13 @@ T1 (46)
    22          | T1 . tSUB T1
    22          | T1 tSUB T1 .
 
-    tMUL  décalage et aller à l'état 43
-    tDIV  décalage et aller à l'état 45
+    tMUL  shift, and go to state 43
+    tDIV  shift, and go to state 45
 
-    $défaut  réduction par utilisation de la règle 22 (OPERATION)
+    $default  reduce using rule 22 (OPERATION)
 
 
-État 55
+state 55
 
    19 OPERATION: T1 . tADD T1
    20          | T1 . tMUL T1
@@ -646,48 +646,48 @@ T1 (46)
    21          | T1 tDIV T1 .
    22          | T1 . tSUB T1
 
-    $défaut  réduction par utilisation de la règle 21 (OPERATION)
+    $default  reduce using rule 21 (OPERATION)
 
 
-État 56
+state 56
 
     1 s: tINT tMAIN tOP tCP tOB BODY tRETURN INT tPV tCB .
 
-    $défaut  réduction par utilisation de la règle 1 (s)
+    $default  reduce using rule 1 (s)
 
 
-État 57
+state 57
 
    16 SuiteVar: tVAR tPV .
 
-    $défaut  réduction par utilisation de la règle 16 (SuiteVar)
+    $default  reduce using rule 16 (SuiteVar)
 
 
-État 58
+state 58
 
    15 SuiteVar: tVAR tVIRGULE . SuiteVar
 
-    tVAR  décalage et aller à l'état 47
+    tVAR  shift, and go to state 47
 
-    SuiteVar  aller à l'état 61
+    SuiteVar  go to state 61
 
 
-État 59
+state 59
 
    13 CreateVAR: TYPE tVAR tAFFECT tNUMBER tPV .
 
-    $défaut  réduction par utilisation de la règle 13 (CreateVAR)
+    $default  reduce using rule 13 (CreateVAR)
 
 
-État 60
+state 60
 
     6 BODY: tPRINTF tOP tVAR tCP tPV BODY .
 
-    $défaut  réduction par utilisation de la règle 6 (BODY)
+    $default  reduce using rule 6 (BODY)
 
 
-État 61
+state 61
 
    15 SuiteVar: tVAR tVIRGULE SuiteVar .
 
-    $défaut  réduction par utilisation de la règle 15 (SuiteVar)
+    $default  reduce using rule 15 (SuiteVar)

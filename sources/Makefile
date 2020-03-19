@@ -1,7 +1,7 @@
 all: comp
 
 comp: y.tab.o lex.yy.o
-	gcc -Wall y.tab.o lex.yy.o -o comp
+	gcc -Wall y.tab.c lex.yy.c -o comp
 
 y.tab.c: source.y
 	yacc --verbose --debug -d source.y

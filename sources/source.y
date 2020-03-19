@@ -1,5 +1,6 @@
 %{
     #include<stdio.h>
+    #include <stdlib.h>
 
     int yydebug = 1;
 
@@ -64,6 +65,7 @@ T1: tOP T1 tCP {printf("Creation de parentheses\n");}
 
 %%
 
-void main () {
+int main () {
     yyparse();
+    return 0;
 }
