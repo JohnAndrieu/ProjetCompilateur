@@ -6,6 +6,6 @@ https://moodle-3a.insa-toulouse.fr/pluginfile.php/132074/mod_resource/content/1/
 
 Useful command line:
 
-	```
+```
 ./comp < hello.c  2>&1 | grep Read
-	```
+```
