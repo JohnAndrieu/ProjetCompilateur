@@ -28,4 +28,5 @@ int getIndice(char a)
       return i;
     }
   }
+  return -1;
 }
