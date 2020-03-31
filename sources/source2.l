@@ -4,7 +4,7 @@
 
 %%
 
-[0-9]+ return tNUMBER;
+[0-9]+ {yylval.nb = atof(yytext); return tNUMBER ;};
 
 main return tMAIN;
 void return tVOID;
@@ -43,7 +43,7 @@ return return tRETURN;
 "/" return tDIV;
 "%" return tMODULO;
 
-[A-z][A-z]* return tVAR;
+[A-z][A-z]* { yylval.var = strdup(yytext) ; return tVAR;};
 
 %%
 
