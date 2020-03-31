@@ -16,3 +16,16 @@ void pushT()
   symbol[idSymbolTemp] = $;
   idSymbolTemp--;
 }
+
+
+int getIndice(char a)
+{
+  int i;
+  for(i=0;i<256 ; i++)
+  {
+    if ( symbol[i] == a)
+    {
+      return i;
+    }
+  }
+}
