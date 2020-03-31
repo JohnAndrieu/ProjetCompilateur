@@ -7,11 +7,13 @@
 %{
     #include<stdio.h>
     #include <stdlib.h>
+     #include <symbol.h>
 
     FILE * inputFile; 
     int yydebug = 1;
-
-    int symbol [256];
+    
+     
+    char symbol [256];
 
     int yylex();
 
@@ -66,13 +68,13 @@ TYPE: tINT {printf("C'est un Int\n");}
     | tDOUBLE {printf("C'est un Double\n");}
     ;
 
-CreateVAR: TYPE tVAR tPV {printf("C'est une VAR\n");}
-    | TYPE tVAR tAFFECT tNUMBER tPV {printf("C'est une Var avec Valeur\n");}
-    | TYPE tVAR tVIRGULE SuiteVar {printf("C'est une suite de creation de variable\n");}
+CreateVAR: TYPE tVAR tPV {printf("C'est une VAR\n"); push($2);}
+    | TYPE tVAR tAFFECT tNUMBER tPV {printf("C'est une Var avec Valeur\n"); push($2)}
+    | TYPE tVAR tVIRGULE SuiteVar {printf("C'est une suite de creation de variable\n");push($2)}
     ;
 
-SuiteVar: tVAR tVIRGULE SuiteVar {printf("C'est une suite de declaration\n");}
-    | tVAR tPV {printf("C'est une creation de variable\n");}
+SuiteVar: tVAR tVIRGULE SuiteVar {printf("C'est une suite de declaration\n");push($1)}
+    | tVAR tPV {printf("C'est une creation de variable\n");push(1)}
     ;
 
 Affectation: tVAR tAFFECT tNUMBER  tPV {printf("C'est une affectation directe\n");}
