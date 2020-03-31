@@ -85,8 +85,7 @@ EXPRESSION: EXPRESSION OPE EXPRESSION {fprintf(inputFile,"ADD %d %d %d\n",$$,$1,
     | tVAR {}
     ;
 
-OPE: 
-    tADD {$$=1;}
+OPE: tADD {$$=1;}
     | tMUL {$$=2;}
     | tSUB {$$=3;}
     | tDIV {$$=4;}
