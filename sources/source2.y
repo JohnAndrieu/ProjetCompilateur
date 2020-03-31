@@ -2,13 +2,16 @@
 {
     int nb;
     char * var;
-
 }
+
 %{
     #include<stdio.h>
     #include <stdlib.h>
 
+    FILE * inputFile; 
     int yydebug = 1;
+
+    int symbol [256];
 
     int yylex();
 
@@ -19,10 +22,27 @@
     }
 %}
 
+/*int * search_symbol(int token) {
+    int i;
+    for(i = 0 ; i < 256 ; i++) {
+        if( symbol[i] == token ) {
+            return &symbol[i];
+        }
+        else {
+            return NULL;
+        }
+    }
+}*/
+
 %token <nb> tNUMBER ;
 %token <var> tVAR;
 %token tMAIN tVOID tOB tOP tCB tCP tPV tVIRGULE tPOINT tINT tFLOAT tBOOL tPRINTF tIF tWHILE tFOR tRETURN tCOMPARE tAFFECT tADD tMUL tSUB tDIV tMODULO;
 %token tDOUBLE tSHORT tLONG tSIGNED tUNSIGNED tSTATIC tTRUE tFALSE;
+
+%type <nb> Affectation;
+%type <nb> EXPRESSION;
+%type <nb> OPE;
+
 %left tADD tSUB
 %left tMUL tDIV
 
@@ -56,36 +76,37 @@ SuiteVar: tVAR tVIRGULE SuiteVar {printf("C'est une suite de declaration\n");}
     ;
 
 Affectation: tVAR tAFFECT tNUMBER  tPV {printf("C'est une affectation directe\n");}
-    | tVAR tAFFECT OPERATION tPV {printf("C'est une affectation\n");}
+    | tVAR tAFFECT EXPRESSION tPV {printf("C'est une affectation\n");}
     ;
 
-OPERATION: T1 tADD T1 {printf("C'est une Add\n");}
-    | T1 tMUL T1 {printf("C'est une Mul\n");}
-    | T1 tDIV T1 {printf("C'est une Div\n");}
-    | T1 tSUB T1 {printf("C'est un Sub\n");}
+EXPRESSION: EXPRESSION OPE EXPRESSION {fprintf(inputFile,"ADD %d %d %d\n",$$,$1,$3);}
+    | tOP EXPRESSION tCP {}
+    | tNUMBER { } 
+    | tVAR {}
     ;
 
-T1: tOP T1 tCP {printf("Creation de parentheses\n");}
-    | tNUMBER {printf("C'est un Nombre\n");}
-    | tVAR {printf("C'est une Var\n");}
-    | OPERATION {printf("C'est une Operation\n");}
+OPE: 
+    tADD {$$=1;}
+    | tMUL {$$=2;}
+    | tSUB {$$=3;}
+    | tDIV {$$=4;}
     ;
 
 %%
 
 int main () {
     printf("Debut\n");
-    FILE * inputFile = NULL;
-    inputFile = fopen("asm.txt","r+");
+    inputFile = fopen("asm.txt","w");
+    
     if(inputFile == NULL) {
         printf("Cannot open file %s\n","ASM");
         exit(0);
     }
     else {
-        fprintf(inputFile,"blabla");
         yyparse();
         fclose(inputFile);
         printf("FIN\n");
     }
+
     return 0;
 }
