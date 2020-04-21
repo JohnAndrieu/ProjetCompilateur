@@ -11,7 +11,7 @@ int push_symbol(char *id, int cons, int depth)
     new_symbol->depth = depth;
 
     idSymbol++;
-    return 0;
+    return idSymbol-1;
 }
 
 int push_tmp_symbol(char * id, int cons, int depth)
@@ -24,7 +24,7 @@ int push_tmp_symbol(char * id, int cons, int depth)
     printf("ajout  symbole temporaire à l'@ : %d \n",idSymbolTemp);
     idSymbolTemp--;
 
-    return 0;
+    return idSymbolTemp+1;
 }
 
 void pop_symbol() {

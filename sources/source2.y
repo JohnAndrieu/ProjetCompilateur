@@ -76,6 +76,7 @@
 %type <nb> Affectation;
 %type <nb> EXPRESSION;
 
+%right '='
 %left tADD tSUB
 %left tMUL tDIV
 
@@ -158,6 +159,9 @@ EXPRESSION: tOP EXPRESSION tCP {}
 %%
 
 int main () { 
+    FILE * fichier = fopen("./asm.txt","w");
+    fputs("",fichier);
+    fclose(fichier);
     yyparse();
     return 0;
 }
