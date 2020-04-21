@@ -40,31 +40,31 @@
       know about them.  */
    enum yytokentype {
      tNUMBER = 258,
-     tMAIN = 259,
-     tVOID = 260,
-     tOB = 261,
-     tOP = 262,
-     tCB = 263,
-     tCP = 264,
-     tPV = 265,
-     tVIRGULE = 266,
-     tPOINT = 267,
-     tINT = 268,
-     tFLOAT = 269,
-     tBOOL = 270,
-     tPRINTF = 271,
-     tIF = 272,
-     tWHILE = 273,
-     tFOR = 274,
-     tRETURN = 275,
-     tCOMPARE = 276,
-     tAFFECT = 277,
-     tADD = 278,
-     tMUL = 279,
-     tSUB = 280,
-     tDIV = 281,
-     tMODULO = 282,
-     tVAR = 283,
+     tVAR = 259,
+     tMAIN = 260,
+     tVOID = 261,
+     tOB = 262,
+     tOP = 263,
+     tCB = 264,
+     tCP = 265,
+     tPV = 266,
+     tVIRGULE = 267,
+     tPOINT = 268,
+     tINT = 269,
+     tFLOAT = 270,
+     tBOOL = 271,
+     tPRINTF = 272,
+     tIF = 273,
+     tWHILE = 274,
+     tFOR = 275,
+     tRETURN = 276,
+     tCOMPARE = 277,
+     tAFFECT = 278,
+     tADD = 279,
+     tMUL = 280,
+     tSUB = 281,
+     tDIV = 282,
+     tMODULO = 283,
      tDOUBLE = 284,
      tSHORT = 285,
      tLONG = 286,
@@ -77,31 +77,31 @@
 #endif
 /* Tokens.  */
 #define tNUMBER 258
-#define tMAIN 259
-#define tVOID 260
-#define tOB 261
-#define tOP 262
-#define tCB 263
-#define tCP 264
-#define tPV 265
-#define tVIRGULE 266
-#define tPOINT 267
-#define tINT 268
-#define tFLOAT 269
-#define tBOOL 270
-#define tPRINTF 271
-#define tIF 272
-#define tWHILE 273
-#define tFOR 274
-#define tRETURN 275
-#define tCOMPARE 276
-#define tAFFECT 277
-#define tADD 278
-#define tMUL 279
-#define tSUB 280
-#define tDIV 281
-#define tMODULO 282
-#define tVAR 283
+#define tVAR 259
+#define tMAIN 260
+#define tVOID 261
+#define tOB 262
+#define tOP 263
+#define tCB 264
+#define tCP 265
+#define tPV 266
+#define tVIRGULE 267
+#define tPOINT 268
+#define tINT 269
+#define tFLOAT 270
+#define tBOOL 271
+#define tPRINTF 272
+#define tIF 273
+#define tWHILE 274
+#define tFOR 275
+#define tRETURN 276
+#define tCOMPARE 277
+#define tAFFECT 278
+#define tADD 279
+#define tMUL 280
+#define tSUB 281
+#define tDIV 282
+#define tMODULO 283
 #define tDOUBLE 284
 #define tSHORT 285
 #define tLONG 286
@@ -115,7 +115,15 @@
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 2 "source2.y"
+{
+    int nb;
+    char * var;
+}
+/* Line 1529 of yacc.c.  */
+#line 126 "y.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

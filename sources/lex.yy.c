@@ -785,7 +785,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 7 "source2.l"
-return tNUMBER;
+{yylval.nb = atof(yytext); return tNUMBER ;};
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -950,7 +950,7 @@ return tMODULO;
 case 34:
 YY_RULE_SETUP
 #line 46 "source2.l"
-return tVAR;
+{ strcpy(yylval.var,yytext); return tVAR;};
 	YY_BREAK
 case 35:
 YY_RULE_SETUP

@@ -1,3 +1,9 @@
+%union
+{
+    int nb;
+    char * var;
+
+}
 %{
     #include<stdio.h>
     #include <stdlib.h>
@@ -13,7 +19,9 @@
     }
 %}
 
-%token tNUMBER tMAIN tVOID tOB tOP tCB tCP tPV tVIRGULE tPOINT tINT tFLOAT tBOOL tPRINTF tIF tWHILE tFOR tRETURN tCOMPARE tAFFECT tADD tMUL tSUB tDIV tMODULO tVAR;
+%token <nb> tNUMBER ;
+%token <var> tVAR;
+%token tMAIN tVOID tOB tOP tCB tCP tPV tVIRGULE tPOINT tINT tFLOAT tBOOL tPRINTF tIF tWHILE tFOR tRETURN tCOMPARE tAFFECT tADD tMUL tSUB tDIV tMODULO;
 %token tDOUBLE tSHORT tLONG tSIGNED tUNSIGNED tSTATIC tTRUE tFALSE;
 %left tADD tSUB
 %left tMUL tDIV
