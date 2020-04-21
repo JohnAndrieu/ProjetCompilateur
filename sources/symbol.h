@@ -1,42 +1,27 @@
+#ifndef SYMBOL_H
+#define SYMBOL_H
+
 #include<stdio.h>
 #include<stdlib.h>
 
 int idSymbol=0;
 int idSymbolTemp = 255;
-char symbol [256];
 
+struct symbol {
+  int constant;
+  int init;
+  int depth;
+  char id [256];
+};
 
+struct symbol symbolTable [256];
 
-void push(char * a)
-{
-  printf("PUSH : on a push le symbol %c\n",a);
-  strcpy(symbol[idSymbol],a);
-  idSymbol++;
-}
-  
-void pushT()
-{
-  strcpy(symbol[idSymbolTemp],"$");
-  idSymbolTemp--;
-}
+int push_symbol(char *);
+void pop_symbol();
+int push_tmp_symbol(char *, int, int);
+void clear_tmp_symbol(int);
+int get_address(char *, int);
+void set_initialized(char *, int);
+int is_initialized(char *, int);
 
-
-int getIndice(char a)
-{
-  int i;
-  for(i=0 ; i<256 ; i++)
-  {
-    if ( symbol[i] == a)
-    {
-      return i;
-    }
-  }
-  return -1;
-}
-
-void printTab (char * tab) {
-  int i = 0;
-  for(i = 0 ; i < 5 ; i++) {
-    printf("Indice %d : %c\n",i,tab[i]);
-  }
-}
+#endif

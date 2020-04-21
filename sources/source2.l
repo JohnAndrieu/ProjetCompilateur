@@ -16,6 +16,8 @@ void return tVOID;
 ";" return tPV;
 "," return tVIRGULE;
 "." return tPOINT;
+\< return tINF;
+\> return tSUP;
 
 int return tINT;
 float return tFLOAT;
@@ -43,7 +45,7 @@ return return tRETURN;
 "/" return tDIV;
 "%" return tMODULO;
 
-[A-z][A-z]* { strcpy(yylval.var,yytext); return tVAR;};
+[A-z][A-z]* { yylval.var = strdup(yytext); return tVAR;};
 
 %%
 

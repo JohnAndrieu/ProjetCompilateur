@@ -950,7 +950,7 @@ return tMODULO;
 case 34:
 YY_RULE_SETUP
 #line 46 "source2.l"
-{ strcpy(yylval.var,yytext); return tVAR;};
+{ yylval.var = strdup(yytext); return tVAR;};
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
