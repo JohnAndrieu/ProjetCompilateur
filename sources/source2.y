@@ -11,6 +11,7 @@
     int yydebug = 0;
     int depth = 0;
     int constante = 0;
+    int cpt_tmp_symbol = 0;
     char Buffer[50];
 
     int yylex();
@@ -39,16 +40,27 @@
     }
 
     int operation(int addr1,char * op,int addr2){
-        sprintf(Buffer,"%d",get_end_pointer());
-        int addr_return = add_tmp_symbol(Buffer,constante,depth);
+        sprintf(Buffer,"%d",get_indice_temp());
+        int addr_return = push_tmp_symbol(Buffer,constante,depth);
         printf("%s @ret : %d @exp1 : %d @exp2 : %d\n",op,addr_return,addr1,addr2);
 
-        char * assembly = malloc(100 * sizeof(char));
-        sprintf(assembly,"%s @%d @%d @%d\n",op,addr_return,addr1,addr2);
+        char * ops = malloc(50 * sizeof(char));
+        sprintf(ops,"%s @%d @%d @%d\n",op,addr_return,addr1,addr2);
 
-        insert_file(assembly);
-        add_asm(op,addr_return,addr1,addr2);
+        insert_file(ops);
+        
         return addr_return;
+    }
+
+    int tmp_affec(int nb){
+        cpt_tmp_symbol++; 
+        sprintf(Buffer,"%d",get_indice_temp());
+        int tmp_addr = push_tmp_symbol(Buffer,constante,depth);
+        char * ops = malloc(50 * sizeof(char));
+        sprintf(ops,"AFC @%d %d\n",tmp_addr,nb);
+        insert_file(ops);
+        
+        return tmp_addr;
     }
 
 %}

@@ -194,6 +194,7 @@ typedef union YYSTYPE
     int yydebug = 0;
     int depth = 0;
     int constante = 0;
+    int cpt_tmp_symbol = 0;
     char Buffer[50];
 
     int yylex();
@@ -222,22 +223,33 @@ typedef union YYSTYPE
     }
 
     int operation(int addr1,char * op,int addr2){
-        sprintf(Buffer,"%d",get_end_pointer());
-        int addr_return = add_tmp_symbol(Buffer,constante,depth);
+        sprintf(Buffer,"%d",get_indice_temp());
+        int addr_return = push_tmp_symbol(Buffer,constante,depth);
         printf("%s @ret : %d @exp1 : %d @exp2 : %d\n",op,addr_return,addr1,addr2);
 
-        char * assembly = malloc(100 * sizeof(char));
-        sprintf(assembly,"%s @%d @%d @%d\n",op,addr_return,addr1,addr2);
+        char * ops = malloc(50 * sizeof(char));
+        sprintf(ops,"%s @%d @%d @%d\n",op,addr_return,addr1,addr2);
 
-        insert_file(assembly);
-        add_asm(op,addr_return,addr1,addr2);
+        insert_file(ops);
+        
         return addr_return;
+    }
+
+    int tmp_affec(int nb){
+        cpt_tmp_symbol++; 
+        sprintf(Buffer,"%d",get_indice_temp());
+        int tmp_addr = push_tmp_symbol(Buffer,constante,depth);
+        char * ops = malloc(50 * sizeof(char));
+        sprintf(ops,"AFC @%d %d\n",tmp_addr,nb);
+        insert_file(ops);
+        
+        return tmp_addr;
     }
 
 
 
 /* Line 216 of yacc.c.  */
-#line 241 "y.tab.c"
+#line 253 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -536,10 +548,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    74,    74,    74,    76,    77,    80,    81,    82,    83,
-      86,    87,    88,    89,    90,    93,    94,    95,    95,    98,
-      98,    99,   102,   105,   106,   111,   116,   121,   125,   129,
-     133,   137,   141
+       0,    86,    86,    86,    88,    89,    92,    93,    94,    95,
+      98,    99,   100,   101,   102,   105,   106,   107,   107,   110,
+     110,   111,   114,   117,   118,   123,   128,   133,   137,   141,
+     145,   149,   153
 };
 #endif
 
@@ -1486,146 +1498,146 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 74 "source2.y"
+#line 86 "source2.y"
     {depth++;}
     break;
 
   case 3:
-#line 74 "source2.y"
+#line 86 "source2.y"
     {depth--; /*call depth cleaner*/}
     break;
 
   case 6:
-#line 80 "source2.y"
+#line 92 "source2.y"
     {}
     break;
 
   case 7:
-#line 81 "source2.y"
+#line 93 "source2.y"
     {}
     break;
 
   case 8:
-#line 82 "source2.y"
+#line 94 "source2.y"
     {}
     break;
 
   case 9:
-#line 83 "source2.y"
+#line 95 "source2.y"
     {}
     break;
 
   case 10:
-#line 86 "source2.y"
+#line 98 "source2.y"
     {constante = 0;}
     break;
 
   case 11:
-#line 87 "source2.y"
+#line 99 "source2.y"
     {constante = 0;}
     break;
 
   case 12:
-#line 88 "source2.y"
+#line 100 "source2.y"
     {constante = 0;}
     break;
 
   case 13:
-#line 89 "source2.y"
+#line 101 "source2.y"
     {constante = 0;}
     break;
 
   case 14:
-#line 90 "source2.y"
+#line 102 "source2.y"
     {constante = 1;}
     break;
 
   case 15:
-#line 93 "source2.y"
+#line 105 "source2.y"
     { push_symbol((yyvsp[(2) - (3)].var),constante,depth); }
     break;
 
   case 16:
-#line 94 "source2.y"
+#line 106 "source2.y"
     { push_symbol((yyvsp[(2) - (5)].var),constante,depth); affectation((yyvsp[(2) - (5)].var),(yyvsp[(4) - (5)].nb)); }
     break;
 
   case 17:
-#line 95 "source2.y"
+#line 107 "source2.y"
     { push_symbol((yyvsp[(2) - (2)].var),constante,depth); }
     break;
 
   case 19:
-#line 98 "source2.y"
+#line 110 "source2.y"
     { push_symbol((yyvsp[(1) - (1)].var),constante,depth); }
     break;
 
   case 21:
-#line 99 "source2.y"
+#line 111 "source2.y"
     { push_symbol((yyvsp[(1) - (2)].var),constante,depth); }
     break;
 
   case 22:
-#line 102 "source2.y"
+#line 114 "source2.y"
     { affectation((yyvsp[(1) - (4)].var),(yyvsp[(3) - (4)].nb)); /*clear var temp + reset idSymbolTemp*/ }
     break;
 
   case 23:
-#line 105 "source2.y"
+#line 117 "source2.y"
     {}
     break;
 
   case 24:
-#line 107 "source2.y"
+#line 119 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"ADD",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 25:
-#line 112 "source2.y"
+#line 124 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"MUL",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 26:
-#line 117 "source2.y"
+#line 129 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"DIV",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 27:
-#line 122 "source2.y"
+#line 134 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"DIFF",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 28:
-#line 126 "source2.y"
+#line 138 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"INF",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 29:
-#line 130 "source2.y"
+#line 142 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"SUP",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 30:
-#line 134 "source2.y"
+#line 146 "source2.y"
     {
                     (yyval.nb) = operation((yyvsp[(1) - (3)].nb),"EQU",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 31:
-#line 137 "source2.y"
+#line 149 "source2.y"
     { 
                     int addr_tmp = tmp_affec((yyvsp[(1) - (1)].nb));
                     (yyval.nb) = addr_tmp; 
@@ -1633,7 +1645,7 @@ yyreduce:
     break;
 
   case 32:
-#line 141 "source2.y"
+#line 153 "source2.y"
     { 
                     (yyval.nb) = get_address((yyvsp[(1) - (1)].var), depth); 
                 }
@@ -1641,7 +1653,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1645 "y.tab.c"
+#line 1657 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1855,7 +1867,7 @@ yyreturn:
 }
 
 
-#line 146 "source2.y"
+#line 158 "source2.y"
 
 
 int main () { 
