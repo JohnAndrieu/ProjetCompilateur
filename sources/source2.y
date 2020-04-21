@@ -115,7 +115,10 @@ SuiteVar: tVAR { push_symbol($1,constante,depth); } tVIRGULE SuiteVar
 Affectation: tVAR tAFFECT EXPRESSION tPV { affectation($1,$3); /*clear var temp + reset idSymbolTemp*/ }
     ;
 
-EXPRESSION: tOP EXPRESSION tCP {}
+EXPRESSION: tOP EXPRESSION tCP 
+                {
+                    $$ = $2;
+                }
     |EXPRESSION tADD EXPRESSION
                 {
                     $$ = operation($1,"ADD",$3);
