@@ -10,6 +10,8 @@
 
     int yydebug = 0;
     int depth = 0;
+    int constante = 0;
+    char Buffer[50];
 
     int yylex();
 
@@ -28,10 +30,12 @@
     }
 
     void affectation(char * var,int tmpAddr){
-        int varAddr  = get_address(var);
+        int varAddr  = get_address(var,depth);
         char * ops = malloc(50 * sizeof(char));
         sprintf(ops,"COP @%d @%d\n",varAddr,tmpAddr);
         insert_file(ops);
+
+        set_initialized(var, depth);
     }
 
     int operation(int addr1,char * op,int addr2){
@@ -52,14 +56,13 @@
 
 %token tMAIN tVOID tOB tOP tCB tCP tPV tVIRGULE tPOINT tINT tFLOAT tMUL tINF;
 %token tBOOL tPRINTF tIF tWHILE tFOR tRETURN tCOMPARE tAFFECT tADD tMODULO tSUP;
-%token tDOUBLE tSHORT tLONG tSIGNED tUNSIGNED tSTATIC tTRUE tFALSE tSUB tDIV;
+%token tDOUBLE tSHORT tLONG tSIGNED tUNSIGNED tSTATIC tTRUE tFALSE tSUB tDIV tCONST;
 
 %token <var> tVAR;
-%token <nb> tNUMBER ;
+%token <nb> tNUMBER;
 
 %type <nb> Affectation;
 %type <nb> EXPRESSION;
-%type <nb> OPE;
 
 %left tADD tSUB
 %left tMUL tDIV
@@ -68,7 +71,7 @@
 
 %%
 
-S: tINT tMAIN tOP tCP tOB {depth++;} BODY tRETURN INT tPV tCB {depth--;};
+S: tINT tMAIN tOP tCP tOB {depth++;} BODY tRETURN INT tPV tCB {depth--; /*call depth cleaner*/};
 
 INT: tVAR
     | tNUMBER
@@ -80,22 +83,23 @@ BODY: CreateVAR BODY {}
     | {}
     ;
 
-TYPE: tINT {}
-    | tBOOL {}
-    | tFLOAT {}
-    | tDOUBLE {}
+TYPE: tINT {constante = 0;} 
+    | tBOOL {constante = 0;} 
+    | tFLOAT {constante = 0;} 
+    | tDOUBLE {constante = 0;} 
+    | tCONST {constante = 1;}
     ;
 
-CreateVAR: TYPE tVAR tPV { push_symbol($2); }
-    | TYPE tVAR { push_symbol($2); } tAFFECT tNUMBER tPV {}
-    | TYPE tVAR { push_symbol($2); } tVIRGULE SuiteVar
+CreateVAR: TYPE tVAR tPV { push_symbol($2,constante,depth); }
+    | TYPE tVAR tAFFECT tNUMBER tPV { push_symbol($2,constante,depth); affectation($2,$4); }  
+    | TYPE tVAR { push_symbol($2,constante,depth); } tVIRGULE SuiteVar
     ;
 
-SuiteVar: tVAR { push_symbol($1); } tVIRGULE SuiteVar 
-    | tVAR tPV { push_symbol($1); }
+SuiteVar: tVAR { push_symbol($1,constante,depth); } tVIRGULE SuiteVar 
+    | tVAR tPV { push_symbol($1,constante,depth); }
     ;
 
-Affectation: tVAR tAFFECT EXPRESSION tPV { affectation($1,$3); //clear var temp + reset idSymbolTemp}
+Affectation: tVAR tAFFECT EXPRESSION tPV { affectation($1,$3); /*clear var temp + reset idSymbolTemp*/ }
     ;
 
 EXPRESSION: tOP EXPRESSION tCP {}
@@ -135,7 +139,7 @@ EXPRESSION: tOP EXPRESSION tCP {}
                     $$ = addr_tmp; 
                 } 
     | tVAR      { 
-                    $$ = get_address($1); 
+                    $$ = get_address($1, depth); 
                 }
     ;
 

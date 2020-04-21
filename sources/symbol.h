@@ -16,7 +16,7 @@ struct symbol {
 
 struct symbol symbolTable [256];
 
-int push_symbol(char *);
+int push_symbol(char *, int , int);
 void pop_symbol();
 int push_tmp_symbol(char *, int, int);
 void clear_tmp_symbol(int);

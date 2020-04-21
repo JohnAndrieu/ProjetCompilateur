@@ -39,19 +39,19 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     tNUMBER = 258,
-     tVAR = 259,
-     tMAIN = 260,
-     tVOID = 261,
-     tOB = 262,
-     tOP = 263,
-     tCB = 264,
-     tCP = 265,
-     tPV = 266,
-     tVIRGULE = 267,
-     tPOINT = 268,
-     tINT = 269,
-     tFLOAT = 270,
+     tMAIN = 258,
+     tVOID = 259,
+     tOB = 260,
+     tOP = 261,
+     tCB = 262,
+     tCP = 263,
+     tPV = 264,
+     tVIRGULE = 265,
+     tPOINT = 266,
+     tINT = 267,
+     tFLOAT = 268,
+     tMUL = 269,
+     tINF = 270,
      tBOOL = 271,
      tPRINTF = 272,
      tIF = 273,
@@ -61,34 +61,37 @@
      tCOMPARE = 277,
      tAFFECT = 278,
      tADD = 279,
-     tMUL = 280,
-     tSUB = 281,
-     tDIV = 282,
-     tMODULO = 283,
-     tDOUBLE = 284,
-     tSHORT = 285,
-     tLONG = 286,
-     tSIGNED = 287,
-     tUNSIGNED = 288,
-     tSTATIC = 289,
-     tTRUE = 290,
-     tFALSE = 291
+     tMODULO = 280,
+     tSUP = 281,
+     tDOUBLE = 282,
+     tSHORT = 283,
+     tLONG = 284,
+     tSIGNED = 285,
+     tUNSIGNED = 286,
+     tSTATIC = 287,
+     tTRUE = 288,
+     tFALSE = 289,
+     tSUB = 290,
+     tDIV = 291,
+     tCONST = 292,
+     tVAR = 293,
+     tNUMBER = 294
    };
 #endif
 /* Tokens.  */
-#define tNUMBER 258
-#define tVAR 259
-#define tMAIN 260
-#define tVOID 261
-#define tOB 262
-#define tOP 263
-#define tCB 264
-#define tCP 265
-#define tPV 266
-#define tVIRGULE 267
-#define tPOINT 268
-#define tINT 269
-#define tFLOAT 270
+#define tMAIN 258
+#define tVOID 259
+#define tOB 260
+#define tOP 261
+#define tCB 262
+#define tCP 263
+#define tPV 264
+#define tVIRGULE 265
+#define tPOINT 266
+#define tINT 267
+#define tFLOAT 268
+#define tMUL 269
+#define tINF 270
 #define tBOOL 271
 #define tPRINTF 272
 #define tIF 273
@@ -98,18 +101,21 @@
 #define tCOMPARE 277
 #define tAFFECT 278
 #define tADD 279
-#define tMUL 280
-#define tSUB 281
-#define tDIV 282
-#define tMODULO 283
-#define tDOUBLE 284
-#define tSHORT 285
-#define tLONG 286
-#define tSIGNED 287
-#define tUNSIGNED 288
-#define tSTATIC 289
-#define tTRUE 290
-#define tFALSE 291
+#define tMODULO 280
+#define tSUP 281
+#define tDOUBLE 282
+#define tSHORT 283
+#define tLONG 284
+#define tSIGNED 285
+#define tUNSIGNED 286
+#define tSTATIC 287
+#define tTRUE 288
+#define tFALSE 289
+#define tSUB 290
+#define tDIV 291
+#define tCONST 292
+#define tVAR 293
+#define tNUMBER 294
 
 
 
@@ -122,7 +128,7 @@ typedef union YYSTYPE
     char * var;
 }
 /* Line 1529 of yacc.c.  */
-#line 126 "y.tab.h"
+#line 132 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

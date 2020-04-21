@@ -20,6 +20,7 @@ void return tVOID;
 \> return tSUP;
 
 int return tINT;
+const return tCONST;
 float return tFLOAT;
 boolean return tBOOL;
 double return tDOUBLE;
