@@ -34,6 +34,7 @@ false return tFALSE;
 
 printf return tPRINTF;
 if return tIF;
+else return tELSE;
 while return tWHILE;
 for return tFOR;
 return return tRETURN;

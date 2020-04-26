@@ -31,7 +31,7 @@ void pop_symbol() {
     idSymbol--;
 }
 
-void pop_tmp_symbol(int nb_tmp_symbol){
+void clear_tmp_symbol(){
     idSymbolTemp = 255;
 }
 
@@ -83,11 +83,3 @@ int get_indice_temp(){
 int get_indice(){
     return idSymbolTemp;
 }
-
-//int push_symbol(char *);
-//void pop_symbol();
-//int push_tmp_symbol(char *, int, int);
-//void clear_tmp_symbol(int);
-//int get_address(char *, int);
-//void set_initialized(char *, int);
-//int is_initialized(char *, int);

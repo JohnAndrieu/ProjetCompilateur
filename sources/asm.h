@@ -12,5 +12,9 @@ struct struct_asm
 typedef struct struct_asm tab_asm;
 
 int add_asm(char *, int, int, int);
+void patch_JMP(int , int );
+void patch_JMF(int , int );
+int get_nb_line_asm();
+void print_assembly();
 
 #endif

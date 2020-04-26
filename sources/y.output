@@ -2,8 +2,6 @@ Terminals which are not used
 
    tVOID
    tPOINT
-   tIF
-   tWHILE
    tFOR
    tMODULO
    tSHORT
@@ -16,13 +14,13 @@ Terminals which are not used
    '='
 
 
-State 52 conflicts: 3 shift/reduce
-State 53 conflicts: 7 shift/reduce
-State 54 conflicts: 7 shift/reduce
-State 55 conflicts: 3 shift/reduce
-State 56 conflicts: 7 shift/reduce
-State 57 conflicts: 3 shift/reduce
-State 58 conflicts: 3 shift/reduce
+State 70 conflicts: 3 shift/reduce
+State 71 conflicts: 7 shift/reduce
+State 72 conflicts: 7 shift/reduce
+State 73 conflicts: 3 shift/reduce
+State 74 conflicts: 7 shift/reduce
+State 75 conflicts: 3 shift/reduce
+State 76 conflicts: 3 shift/reduce
 
 
 Grammar
@@ -31,46 +29,66 @@ Grammar
 
     1 @1: /* empty */
 
-    2 S: tINT tMAIN tOP tCP tOB @1 BODY tRETURN INT tPV tCB
+    2 @2: /* empty */
 
-    3 INT: tVAR
-    4    | tNUMBER
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 BODY tRETURN INT tPV tCB
 
-    5 BODY: CreateVAR BODY
-    6     | Affectation BODY
-    7     | tPRINTF tOP tVAR tCP tPV BODY
-    8     | /* empty */
+    4 INT: tVAR
+    5    | tNUMBER
 
-    9 TYPE: tINT
-   10     | tBOOL
-   11     | tFLOAT
-   12     | tDOUBLE
-   13     | tCONST
+    6 BODY: CreateVAR BODY
+    7     | Affectation BODY
+    8     | tPRINTF tOP tVAR tCP tPV BODY
+    9     | IFBLOCK BODY
+   10     | WHILEBLOCK BODY
+   11     | /* empty */
 
-   14 CreateVAR: TYPE tVAR tPV
-   15          | TYPE tVAR tAFFECT tNUMBER tPV
+   12 TYPE: tINT
+   13     | tBOOL
+   14     | tFLOAT
+   15     | tDOUBLE
+   16     | tCONST
 
-   16 @2: /* empty */
+   17 CreateVAR: TYPE tVAR tPV
+   18          | TYPE tVAR tAFFECT tNUMBER tPV
 
-   17 CreateVAR: TYPE tVAR @2 tVIRGULE SuiteVar
+   19 @3: /* empty */
 
-   18 @3: /* empty */
+   20 CreateVAR: TYPE tVAR @3 tVIRGULE SuiteVar
 
-   19 SuiteVar: tVAR @3 tVIRGULE SuiteVar
-   20         | tVAR tPV
+   21 @4: /* empty */
 
-   21 Affectation: tVAR tAFFECT EXPRESSION tPV
+   22 SuiteVar: tVAR @4 tVIRGULE SuiteVar
+   23         | tVAR tPV
 
-   22 EXPRESSION: tOP EXPRESSION tCP
-   23           | EXPRESSION tADD EXPRESSION
-   24           | EXPRESSION tMUL EXPRESSION
-   25           | EXPRESSION tDIV EXPRESSION
-   26           | EXPRESSION tSUB EXPRESSION
-   27           | EXPRESSION tINF EXPRESSION
-   28           | EXPRESSION tSUP EXPRESSION
-   29           | EXPRESSION tCOMPARE EXPRESSION
-   30           | tNUMBER
-   31           | tVAR
+   24 Affectation: tVAR tAFFECT EXPRESSION tPV
+
+   25 IFBLOCK: IFBLOCK1
+
+   26 @5: /* empty */
+
+   27 IFBLOCK: IFBLOCK1 tELSE @5 tOB BODY tCB
+
+   28 @6: /* empty */
+
+   29 IFBLOCK1: tIF tOP EXPRESSION @6 tCP tOB BODY tCB
+
+   30 WHILEBLOCK: WHILEBLOCK1
+
+   31 @7: /* empty */
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION @7 tCP tOB BODY tCB
+
+   33 EXPRESSION: tOP EXPRESSION tCP
+   34           | EXPRESSION tADD EXPRESSION
+   35           | EXPRESSION tMUL EXPRESSION
+   36           | EXPRESSION tDIV EXPRESSION
+   37           | EXPRESSION tSUB EXPRESSION
+   38           | EXPRESSION tINF EXPRESSION
+   39           | EXPRESSION tSUP EXPRESSION
+   40           | EXPRESSION tCOMPARE EXPRESSION
+   41           | tNUMBER
+   42           | tVAR
 
 
 Terminals, with rules where they appear
@@ -78,812 +96,1192 @@ Terminals, with rules where they appear
 $end (0) 0
 '=' (61)
 error (256)
-tMAIN (258) 2
+tMAIN (258) 3
 tVOID (259)
-tOB (260) 2
-tOP (261) 2 7 22
-tCB (262) 2
-tCP (263) 2 7 22
-tPV (264) 2 7 14 15 20 21
-tVIRGULE (265) 17 19
+tOB (260) 3 27 29 32
+tOP (261) 3 8 29 32 33
+tCB (262) 3 27 29 32
+tCP (263) 3 8 29 32 33
+tPV (264) 3 8 17 18 23 24
+tVIRGULE (265) 20 22
 tPOINT (266)
-tINT (267) 2 9
-tFLOAT (268) 11
-tMUL (269) 24
-tINF (270) 27
-tBOOL (271) 10
-tPRINTF (272) 7
-tIF (273)
-tWHILE (274)
-tFOR (275)
-tRETURN (276) 2
-tCOMPARE (277) 29
-tAFFECT (278) 15 21
-tADD (279) 23
-tMODULO (280)
-tSUP (281) 28
-tDOUBLE (282) 12
-tSHORT (283)
-tLONG (284)
-tSIGNED (285)
-tUNSIGNED (286)
-tSTATIC (287)
-tTRUE (288)
-tFALSE (289)
-tSUB (290) 26
-tDIV (291) 25
-tCONST (292) 13
-tVAR (293) 3 7 14 15 17 19 20 21 31
-tNUMBER (294) 4 15 30
+tINT (267) 3 12
+tFLOAT (268) 14
+tMUL (269) 35
+tINF (270) 38
+tELSE (271) 27
+tBOOL (272) 13
+tPRINTF (273) 8
+tIF (274) 29
+tWHILE (275) 32
+tFOR (276)
+tRETURN (277) 3
+tCOMPARE (278) 40
+tAFFECT (279) 18 24
+tADD (280) 34
+tMODULO (281)
+tSUP (282) 39
+tDOUBLE (283) 15
+tSHORT (284)
+tLONG (285)
+tSIGNED (286)
+tUNSIGNED (287)
+tSTATIC (288)
+tTRUE (289)
+tFALSE (290)
+tSUB (291) 37
+tDIV (292) 36
+tCONST (293) 16
+tVAR (294) 4 8 17 18 20 22 23 24 42
+tNUMBER (295) 5 18 41
 
 
 Nonterminals, with rules where they appear
 
-$accept (41)
+$accept (42)
     on left: 0
-S (42)
-    on left: 2, on right: 0
-@1 (43)
-    on left: 1, on right: 2
-INT (44)
-    on left: 3 4, on right: 2
-BODY (45)
-    on left: 5 6 7 8, on right: 2 5 6 7
-TYPE (46)
-    on left: 9 10 11 12 13, on right: 14 15 17
-CreateVAR (47)
-    on left: 14 15 17, on right: 5
-@2 (48)
-    on left: 16, on right: 17
-SuiteVar (49)
-    on left: 19 20, on right: 17 19
+S (43)
+    on left: 3, on right: 0
+@1 (44)
+    on left: 1, on right: 3
+@2 (45)
+    on left: 2, on right: 3
+INT (46)
+    on left: 4 5, on right: 3
+BODY (47)
+    on left: 6 7 8 9 10 11, on right: 3 6 7 8 9 10 27 29 32
+TYPE (48)
+    on left: 12 13 14 15 16, on right: 17 18 20
+CreateVAR (49)
+    on left: 17 18 20, on right: 6
 @3 (50)
-    on left: 18, on right: 19
-Affectation (51)
-    on left: 21, on right: 6
-EXPRESSION (52)
-    on left: 22 23 24 25 26 27 28 29 30 31, on right: 21 22 23 24 25
-    26 27 28 29
+    on left: 19, on right: 20
+SuiteVar (51)
+    on left: 22 23, on right: 20 22
+@4 (52)
+    on left: 21, on right: 22
+Affectation (53)
+    on left: 24, on right: 7
+IFBLOCK (54)
+    on left: 25 27, on right: 9
+@5 (55)
+    on left: 26, on right: 27
+IFBLOCK1 (56)
+    on left: 29, on right: 25 27
+@6 (57)
+    on left: 28, on right: 29
+WHILEBLOCK (58)
+    on left: 30, on right: 10
+WHILEBLOCK1 (59)
+    on left: 32, on right: 30
+@7 (60)
+    on left: 31, on right: 32
+EXPRESSION (61)
+    on left: 33 34 35 36 37 38 39 40 41 42, on right: 24 29 32 33 34
+    35 36 37 38 39 40
 
 
 state 0
 
     0 $accept: . S $end
 
-    tINT  shift, and go to state 1
+    $default  reduce using rule 1 (@1)
 
-    S  go to state 2
+    S   go to state 1
+    @1  go to state 2
 
 
 state 1
 
-    2 S: tINT . tMAIN tOP tCP tOB @1 BODY tRETURN INT tPV tCB
+    0 $accept: S . $end
 
-    tMAIN  shift, and go to state 3
+    $end  shift, and go to state 3
 
 
 state 2
 
-    0 $accept: S . $end
+    3 S: @1 . tINT tMAIN tOP tCP tOB @2 BODY tRETURN INT tPV tCB
 
-    $end  shift, and go to state 4
+    tINT  shift, and go to state 4
 
 
 state 3
-
-    2 S: tINT tMAIN . tOP tCP tOB @1 BODY tRETURN INT tPV tCB
-
-    tOP  shift, and go to state 5
-
-
-state 4
 
     0 $accept: S $end .
 
     $default  accept
 
 
+state 4
+
+    3 S: @1 tINT . tMAIN tOP tCP tOB @2 BODY tRETURN INT tPV tCB
+
+    tMAIN  shift, and go to state 5
+
+
 state 5
 
-    2 S: tINT tMAIN tOP . tCP tOB @1 BODY tRETURN INT tPV tCB
+    3 S: @1 tINT tMAIN . tOP tCP tOB @2 BODY tRETURN INT tPV tCB
 
-    tCP  shift, and go to state 6
+    tOP  shift, and go to state 6
 
 
 state 6
 
-    2 S: tINT tMAIN tOP tCP . tOB @1 BODY tRETURN INT tPV tCB
+    3 S: @1 tINT tMAIN tOP . tCP tOB @2 BODY tRETURN INT tPV tCB
 
-    tOB  shift, and go to state 7
+    tCP  shift, and go to state 7
 
 
 state 7
 
-    2 S: tINT tMAIN tOP tCP tOB . @1 BODY tRETURN INT tPV tCB
+    3 S: @1 tINT tMAIN tOP tCP . tOB @2 BODY tRETURN INT tPV tCB
 
-    $default  reduce using rule 1 (@1)
-
-    @1  go to state 8
+    tOB  shift, and go to state 8
 
 
 state 8
 
-    2 S: tINT tMAIN tOP tCP tOB @1 . BODY tRETURN INT tPV tCB
+    3 S: @1 tINT tMAIN tOP tCP tOB . @2 BODY tRETURN INT tPV tCB
 
-    tINT     shift, and go to state 9
-    tFLOAT   shift, and go to state 10
-    tBOOL    shift, and go to state 11
-    tPRINTF  shift, and go to state 12
-    tDOUBLE  shift, and go to state 13
-    tCONST   shift, and go to state 14
-    tVAR     shift, and go to state 15
+    $default  reduce using rule 2 (@2)
 
-    $default  reduce using rule 8 (BODY)
-
-    BODY         go to state 16
-    TYPE         go to state 17
-    CreateVAR    go to state 18
-    Affectation  go to state 19
+    @2  go to state 9
 
 
 state 9
 
-    9 TYPE: tINT .
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 . BODY tRETURN INT tPV tCB
 
-    $default  reduce using rule 9 (TYPE)
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
+
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 19
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
 
 
 state 10
 
-   11 TYPE: tFLOAT .
-
-    $default  reduce using rule 11 (TYPE)
-
-
-state 11
-
-   10 TYPE: tBOOL .
-
-    $default  reduce using rule 10 (TYPE)
-
-
-state 12
-
-    7 BODY: tPRINTF . tOP tVAR tCP tPV BODY
-
-    tOP  shift, and go to state 20
-
-
-state 13
-
-   12 TYPE: tDOUBLE .
+   12 TYPE: tINT .
 
     $default  reduce using rule 12 (TYPE)
 
 
-state 14
+state 11
 
-   13 TYPE: tCONST .
+   14 TYPE: tFLOAT .
+
+    $default  reduce using rule 14 (TYPE)
+
+
+state 12
+
+   13 TYPE: tBOOL .
 
     $default  reduce using rule 13 (TYPE)
 
 
+state 13
+
+    8 BODY: tPRINTF . tOP tVAR tCP tPV BODY
+
+    tOP  shift, and go to state 27
+
+
+state 14
+
+   29 IFBLOCK1: tIF . tOP EXPRESSION @6 tCP tOB BODY tCB
+
+    tOP  shift, and go to state 28
+
+
 state 15
 
-   21 Affectation: tVAR . tAFFECT EXPRESSION tPV
+   32 WHILEBLOCK1: tWHILE . tOP EXPRESSION @7 tCP tOB BODY tCB
 
-    tAFFECT  shift, and go to state 21
+    tOP  shift, and go to state 29
 
 
 state 16
 
-    2 S: tINT tMAIN tOP tCP tOB @1 BODY . tRETURN INT tPV tCB
+   15 TYPE: tDOUBLE .
 
-    tRETURN  shift, and go to state 22
+    $default  reduce using rule 15 (TYPE)
 
 
 state 17
 
-   14 CreateVAR: TYPE . tVAR tPV
-   15          | TYPE . tVAR tAFFECT tNUMBER tPV
-   17          | TYPE . tVAR @2 tVIRGULE SuiteVar
+   16 TYPE: tCONST .
 
-    tVAR  shift, and go to state 23
+    $default  reduce using rule 16 (TYPE)
 
 
 state 18
 
-    5 BODY: CreateVAR . BODY
+   24 Affectation: tVAR . tAFFECT EXPRESSION tPV
 
-    tINT     shift, and go to state 9
-    tFLOAT   shift, and go to state 10
-    tBOOL    shift, and go to state 11
-    tPRINTF  shift, and go to state 12
-    tDOUBLE  shift, and go to state 13
-    tCONST   shift, and go to state 14
-    tVAR     shift, and go to state 15
-
-    $default  reduce using rule 8 (BODY)
-
-    BODY         go to state 24
-    TYPE         go to state 17
-    CreateVAR    go to state 18
-    Affectation  go to state 19
+    tAFFECT  shift, and go to state 30
 
 
 state 19
 
-    6 BODY: Affectation . BODY
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 BODY . tRETURN INT tPV tCB
 
-    tINT     shift, and go to state 9
-    tFLOAT   shift, and go to state 10
-    tBOOL    shift, and go to state 11
-    tPRINTF  shift, and go to state 12
-    tDOUBLE  shift, and go to state 13
-    tCONST   shift, and go to state 14
-    tVAR     shift, and go to state 15
-
-    $default  reduce using rule 8 (BODY)
-
-    BODY         go to state 25
-    TYPE         go to state 17
-    CreateVAR    go to state 18
-    Affectation  go to state 19
+    tRETURN  shift, and go to state 31
 
 
 state 20
 
-    7 BODY: tPRINTF tOP . tVAR tCP tPV BODY
+   17 CreateVAR: TYPE . tVAR tPV
+   18          | TYPE . tVAR tAFFECT tNUMBER tPV
+   20          | TYPE . tVAR @3 tVIRGULE SuiteVar
 
-    tVAR  shift, and go to state 26
+    tVAR  shift, and go to state 32
 
 
 state 21
 
-   21 Affectation: tVAR tAFFECT . EXPRESSION tPV
+    6 BODY: CreateVAR . BODY
 
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
 
-    EXPRESSION  go to state 30
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 33
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
 
 
 state 22
 
-    2 S: tINT tMAIN tOP tCP tOB @1 BODY tRETURN . INT tPV tCB
+    7 BODY: Affectation . BODY
 
-    tVAR     shift, and go to state 31
-    tNUMBER  shift, and go to state 32
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
 
-    INT  go to state 33
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 34
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
 
 
 state 23
 
-   14 CreateVAR: TYPE tVAR . tPV
-   15          | TYPE tVAR . tAFFECT tNUMBER tPV
-   17          | TYPE tVAR . @2 tVIRGULE SuiteVar
+    9 BODY: IFBLOCK . BODY
 
-    tPV      shift, and go to state 34
-    tAFFECT  shift, and go to state 35
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
 
-    $default  reduce using rule 16 (@2)
+    $default  reduce using rule 11 (BODY)
 
-    @2  go to state 36
+    BODY         go to state 35
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
 
 
 state 24
 
-    5 BODY: CreateVAR BODY .
+   25 IFBLOCK: IFBLOCK1 .
+   27        | IFBLOCK1 . tELSE @5 tOB BODY tCB
 
-    $default  reduce using rule 5 (BODY)
+    tELSE  shift, and go to state 36
+
+    $default  reduce using rule 25 (IFBLOCK)
 
 
 state 25
 
-    6 BODY: Affectation BODY .
+   10 BODY: WHILEBLOCK . BODY
 
-    $default  reduce using rule 6 (BODY)
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
+
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 37
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
 
 
 state 26
 
-    7 BODY: tPRINTF tOP tVAR . tCP tPV BODY
+   30 WHILEBLOCK: WHILEBLOCK1 .
 
-    tCP  shift, and go to state 37
+    $default  reduce using rule 30 (WHILEBLOCK)
 
 
 state 27
 
-   22 EXPRESSION: tOP . EXPRESSION tCP
+    8 BODY: tPRINTF tOP . tVAR tCP tPV BODY
 
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 38
+    tVAR  shift, and go to state 38
 
 
 state 28
 
-   31 EXPRESSION: tVAR .
+   29 IFBLOCK1: tIF tOP . EXPRESSION @6 tCP tOB BODY tCB
 
-    $default  reduce using rule 31 (EXPRESSION)
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 42
 
 
 state 29
 
-   30 EXPRESSION: tNUMBER .
+   32 WHILEBLOCK1: tWHILE tOP . EXPRESSION @7 tCP tOB BODY tCB
 
-    $default  reduce using rule 30 (EXPRESSION)
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 43
 
 
 state 30
 
-   21 Affectation: tVAR tAFFECT EXPRESSION . tPV
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
+   24 Affectation: tVAR tAFFECT . EXPRESSION tPV
 
-    tPV       shift, and go to state 39
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tADD      shift, and go to state 43
-    tSUP      shift, and go to state 44
-    tSUB      shift, and go to state 45
-    tDIV      shift, and go to state 46
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 44
 
 
 state 31
 
-    3 INT: tVAR .
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 BODY tRETURN . INT tPV tCB
 
-    $default  reduce using rule 3 (INT)
+    tVAR     shift, and go to state 45
+    tNUMBER  shift, and go to state 46
+
+    INT  go to state 47
 
 
 state 32
 
-    4 INT: tNUMBER .
+   17 CreateVAR: TYPE tVAR . tPV
+   18          | TYPE tVAR . tAFFECT tNUMBER tPV
+   20          | TYPE tVAR . @3 tVIRGULE SuiteVar
 
-    $default  reduce using rule 4 (INT)
+    tPV      shift, and go to state 48
+    tAFFECT  shift, and go to state 49
+
+    $default  reduce using rule 19 (@3)
+
+    @3  go to state 50
 
 
 state 33
 
-    2 S: tINT tMAIN tOP tCP tOB @1 BODY tRETURN INT . tPV tCB
+    6 BODY: CreateVAR BODY .
 
-    tPV  shift, and go to state 47
+    $default  reduce using rule 6 (BODY)
 
 
 state 34
 
-   14 CreateVAR: TYPE tVAR tPV .
-
-    $default  reduce using rule 14 (CreateVAR)
-
-
-state 35
-
-   15 CreateVAR: TYPE tVAR tAFFECT . tNUMBER tPV
-
-    tNUMBER  shift, and go to state 48
-
-
-state 36
-
-   17 CreateVAR: TYPE tVAR @2 . tVIRGULE SuiteVar
-
-    tVIRGULE  shift, and go to state 49
-
-
-state 37
-
-    7 BODY: tPRINTF tOP tVAR tCP . tPV BODY
-
-    tPV  shift, and go to state 50
-
-
-state 38
-
-   22 EXPRESSION: tOP EXPRESSION . tCP
-   23           | EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tCP       shift, and go to state 51
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tADD      shift, and go to state 43
-    tSUP      shift, and go to state 44
-    tSUB      shift, and go to state 45
-    tDIV      shift, and go to state 46
-
-
-state 39
-
-   21 Affectation: tVAR tAFFECT EXPRESSION tPV .
-
-    $default  reduce using rule 21 (Affectation)
-
-
-state 40
-
-   24 EXPRESSION: EXPRESSION tMUL . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 52
-
-
-state 41
-
-   27 EXPRESSION: EXPRESSION tINF . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 53
-
-
-state 42
-
-   29 EXPRESSION: EXPRESSION tCOMPARE . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 54
-
-
-state 43
-
-   23 EXPRESSION: EXPRESSION tADD . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 55
-
-
-state 44
-
-   28 EXPRESSION: EXPRESSION tSUP . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 56
-
-
-state 45
-
-   26 EXPRESSION: EXPRESSION tSUB . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 57
-
-
-state 46
-
-   25 EXPRESSION: EXPRESSION tDIV . EXPRESSION
-
-    tOP      shift, and go to state 27
-    tVAR     shift, and go to state 28
-    tNUMBER  shift, and go to state 29
-
-    EXPRESSION  go to state 58
-
-
-state 47
-
-    2 S: tINT tMAIN tOP tCP tOB @1 BODY tRETURN INT tPV . tCB
-
-    tCB  shift, and go to state 59
-
-
-state 48
-
-   15 CreateVAR: TYPE tVAR tAFFECT tNUMBER . tPV
-
-    tPV  shift, and go to state 60
-
-
-state 49
-
-   17 CreateVAR: TYPE tVAR @2 tVIRGULE . SuiteVar
-
-    tVAR  shift, and go to state 61
-
-    SuiteVar  go to state 62
-
-
-state 50
-
-    7 BODY: tPRINTF tOP tVAR tCP tPV . BODY
-
-    tINT     shift, and go to state 9
-    tFLOAT   shift, and go to state 10
-    tBOOL    shift, and go to state 11
-    tPRINTF  shift, and go to state 12
-    tDOUBLE  shift, and go to state 13
-    tCONST   shift, and go to state 14
-    tVAR     shift, and go to state 15
-
-    $default  reduce using rule 8 (BODY)
-
-    BODY         go to state 63
-    TYPE         go to state 17
-    CreateVAR    go to state 18
-    Affectation  go to state 19
-
-
-state 51
-
-   22 EXPRESSION: tOP EXPRESSION tCP .
-
-    $default  reduce using rule 22 (EXPRESSION)
-
-
-state 52
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   24           | EXPRESSION tMUL EXPRESSION .
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tSUP      shift, and go to state 44
-
-    tINF      [reduce using rule 24 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 24 (EXPRESSION)]
-    tSUP      [reduce using rule 24 (EXPRESSION)]
-    $default  reduce using rule 24 (EXPRESSION)
-
-
-state 53
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   27           | EXPRESSION tINF EXPRESSION .
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tADD      shift, and go to state 43
-    tSUP      shift, and go to state 44
-    tSUB      shift, and go to state 45
-    tDIV      shift, and go to state 46
-
-    tMUL      [reduce using rule 27 (EXPRESSION)]
-    tINF      [reduce using rule 27 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 27 (EXPRESSION)]
-    tADD      [reduce using rule 27 (EXPRESSION)]
-    tSUP      [reduce using rule 27 (EXPRESSION)]
-    tSUB      [reduce using rule 27 (EXPRESSION)]
-    tDIV      [reduce using rule 27 (EXPRESSION)]
-    $default  reduce using rule 27 (EXPRESSION)
-
-
-state 54
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-   29           | EXPRESSION tCOMPARE EXPRESSION .
-
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tADD      shift, and go to state 43
-    tSUP      shift, and go to state 44
-    tSUB      shift, and go to state 45
-    tDIV      shift, and go to state 46
-
-    tMUL      [reduce using rule 29 (EXPRESSION)]
-    tINF      [reduce using rule 29 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 29 (EXPRESSION)]
-    tADD      [reduce using rule 29 (EXPRESSION)]
-    tSUP      [reduce using rule 29 (EXPRESSION)]
-    tSUB      [reduce using rule 29 (EXPRESSION)]
-    tDIV      [reduce using rule 29 (EXPRESSION)]
-    $default  reduce using rule 29 (EXPRESSION)
-
-
-state 55
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   23           | EXPRESSION tADD EXPRESSION .
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tSUP      shift, and go to state 44
-    tDIV      shift, and go to state 46
-
-    tINF      [reduce using rule 23 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 23 (EXPRESSION)]
-    tSUP      [reduce using rule 23 (EXPRESSION)]
-    $default  reduce using rule 23 (EXPRESSION)
-
-
-state 56
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   28           | EXPRESSION tSUP EXPRESSION .
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tADD      shift, and go to state 43
-    tSUP      shift, and go to state 44
-    tSUB      shift, and go to state 45
-    tDIV      shift, and go to state 46
-
-    tMUL      [reduce using rule 28 (EXPRESSION)]
-    tINF      [reduce using rule 28 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 28 (EXPRESSION)]
-    tADD      [reduce using rule 28 (EXPRESSION)]
-    tSUP      [reduce using rule 28 (EXPRESSION)]
-    tSUB      [reduce using rule 28 (EXPRESSION)]
-    tDIV      [reduce using rule 28 (EXPRESSION)]
-    $default  reduce using rule 28 (EXPRESSION)
-
-
-state 57
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   26           | EXPRESSION . tSUB EXPRESSION
-   26           | EXPRESSION tSUB EXPRESSION .
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tMUL      shift, and go to state 40
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tSUP      shift, and go to state 44
-    tDIV      shift, and go to state 46
-
-    tINF      [reduce using rule 26 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 26 (EXPRESSION)]
-    tSUP      [reduce using rule 26 (EXPRESSION)]
-    $default  reduce using rule 26 (EXPRESSION)
-
-
-state 58
-
-   23 EXPRESSION: EXPRESSION . tADD EXPRESSION
-   24           | EXPRESSION . tMUL EXPRESSION
-   25           | EXPRESSION . tDIV EXPRESSION
-   25           | EXPRESSION tDIV EXPRESSION .
-   26           | EXPRESSION . tSUB EXPRESSION
-   27           | EXPRESSION . tINF EXPRESSION
-   28           | EXPRESSION . tSUP EXPRESSION
-   29           | EXPRESSION . tCOMPARE EXPRESSION
-
-    tINF      shift, and go to state 41
-    tCOMPARE  shift, and go to state 42
-    tSUP      shift, and go to state 44
-
-    tINF      [reduce using rule 25 (EXPRESSION)]
-    tCOMPARE  [reduce using rule 25 (EXPRESSION)]
-    tSUP      [reduce using rule 25 (EXPRESSION)]
-    $default  reduce using rule 25 (EXPRESSION)
-
-
-state 59
-
-    2 S: tINT tMAIN tOP tCP tOB @1 BODY tRETURN INT tPV tCB .
-
-    $default  reduce using rule 2 (S)
-
-
-state 60
-
-   15 CreateVAR: TYPE tVAR tAFFECT tNUMBER tPV .
-
-    $default  reduce using rule 15 (CreateVAR)
-
-
-state 61
-
-   19 SuiteVar: tVAR . @3 tVIRGULE SuiteVar
-   20         | tVAR . tPV
-
-    tPV  shift, and go to state 64
-
-    $default  reduce using rule 18 (@3)
-
-    @3  go to state 65
-
-
-state 62
-
-   17 CreateVAR: TYPE tVAR @2 tVIRGULE SuiteVar .
-
-    $default  reduce using rule 17 (CreateVAR)
-
-
-state 63
-
-    7 BODY: tPRINTF tOP tVAR tCP tPV BODY .
+    7 BODY: Affectation BODY .
 
     $default  reduce using rule 7 (BODY)
 
 
-state 64
+state 35
 
-   20 SuiteVar: tVAR tPV .
+    9 BODY: IFBLOCK BODY .
 
-    $default  reduce using rule 20 (SuiteVar)
+    $default  reduce using rule 9 (BODY)
 
 
-state 65
+state 36
 
-   19 SuiteVar: tVAR @3 . tVIRGULE SuiteVar
+   27 IFBLOCK: IFBLOCK1 tELSE . @5 tOB BODY tCB
+
+    $default  reduce using rule 26 (@5)
+
+    @5  go to state 51
+
+
+state 37
+
+   10 BODY: WHILEBLOCK BODY .
+
+    $default  reduce using rule 10 (BODY)
+
+
+state 38
+
+    8 BODY: tPRINTF tOP tVAR . tCP tPV BODY
+
+    tCP  shift, and go to state 52
+
+
+state 39
+
+   33 EXPRESSION: tOP . EXPRESSION tCP
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 53
+
+
+state 40
+
+   42 EXPRESSION: tVAR .
+
+    $default  reduce using rule 42 (EXPRESSION)
+
+
+state 41
+
+   41 EXPRESSION: tNUMBER .
+
+    $default  reduce using rule 41 (EXPRESSION)
+
+
+state 42
+
+   29 IFBLOCK1: tIF tOP EXPRESSION . @6 tCP tOB BODY tCB
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+    $default  reduce using rule 28 (@6)
+
+    @6  go to state 61
+
+
+state 43
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION . @7 tCP tOB BODY tCB
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+    $default  reduce using rule 31 (@7)
+
+    @7  go to state 62
+
+
+state 44
+
+   24 Affectation: tVAR tAFFECT EXPRESSION . tPV
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tPV       shift, and go to state 63
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+
+state 45
+
+    4 INT: tVAR .
+
+    $default  reduce using rule 4 (INT)
+
+
+state 46
+
+    5 INT: tNUMBER .
+
+    $default  reduce using rule 5 (INT)
+
+
+state 47
+
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 BODY tRETURN INT . tPV tCB
+
+    tPV  shift, and go to state 64
+
+
+state 48
+
+   17 CreateVAR: TYPE tVAR tPV .
+
+    $default  reduce using rule 17 (CreateVAR)
+
+
+state 49
+
+   18 CreateVAR: TYPE tVAR tAFFECT . tNUMBER tPV
+
+    tNUMBER  shift, and go to state 65
+
+
+state 50
+
+   20 CreateVAR: TYPE tVAR @3 . tVIRGULE SuiteVar
 
     tVIRGULE  shift, and go to state 66
 
 
+state 51
+
+   27 IFBLOCK: IFBLOCK1 tELSE @5 . tOB BODY tCB
+
+    tOB  shift, and go to state 67
+
+
+state 52
+
+    8 BODY: tPRINTF tOP tVAR tCP . tPV BODY
+
+    tPV  shift, and go to state 68
+
+
+state 53
+
+   33 EXPRESSION: tOP EXPRESSION . tCP
+   34           | EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tCP       shift, and go to state 69
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+
+state 54
+
+   35 EXPRESSION: EXPRESSION tMUL . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 70
+
+
+state 55
+
+   38 EXPRESSION: EXPRESSION tINF . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 71
+
+
+state 56
+
+   40 EXPRESSION: EXPRESSION tCOMPARE . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 72
+
+
+state 57
+
+   34 EXPRESSION: EXPRESSION tADD . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 73
+
+
+state 58
+
+   39 EXPRESSION: EXPRESSION tSUP . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 74
+
+
+state 59
+
+   37 EXPRESSION: EXPRESSION tSUB . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 75
+
+
+state 60
+
+   36 EXPRESSION: EXPRESSION tDIV . EXPRESSION
+
+    tOP      shift, and go to state 39
+    tVAR     shift, and go to state 40
+    tNUMBER  shift, and go to state 41
+
+    EXPRESSION  go to state 76
+
+
+state 61
+
+   29 IFBLOCK1: tIF tOP EXPRESSION @6 . tCP tOB BODY tCB
+
+    tCP  shift, and go to state 77
+
+
+state 62
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION @7 . tCP tOB BODY tCB
+
+    tCP  shift, and go to state 78
+
+
+state 63
+
+   24 Affectation: tVAR tAFFECT EXPRESSION tPV .
+
+    $default  reduce using rule 24 (Affectation)
+
+
+state 64
+
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 BODY tRETURN INT tPV . tCB
+
+    tCB  shift, and go to state 79
+
+
+state 65
+
+   18 CreateVAR: TYPE tVAR tAFFECT tNUMBER . tPV
+
+    tPV  shift, and go to state 80
+
+
 state 66
 
-   19 SuiteVar: tVAR @3 tVIRGULE . SuiteVar
+   20 CreateVAR: TYPE tVAR @3 tVIRGULE . SuiteVar
 
-    tVAR  shift, and go to state 61
+    tVAR  shift, and go to state 81
 
-    SuiteVar  go to state 67
+    SuiteVar  go to state 82
 
 
 state 67
 
-   19 SuiteVar: tVAR @3 tVIRGULE SuiteVar .
+   27 IFBLOCK: IFBLOCK1 tELSE @5 tOB . BODY tCB
 
-    $default  reduce using rule 19 (SuiteVar)
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
+
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 83
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
+
+
+state 68
+
+    8 BODY: tPRINTF tOP tVAR tCP tPV . BODY
+
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
+
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 84
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
+
+
+state 69
+
+   33 EXPRESSION: tOP EXPRESSION tCP .
+
+    $default  reduce using rule 33 (EXPRESSION)
+
+
+state 70
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   35           | EXPRESSION tMUL EXPRESSION .
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tSUP      shift, and go to state 58
+
+    tINF      [reduce using rule 35 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 35 (EXPRESSION)]
+    tSUP      [reduce using rule 35 (EXPRESSION)]
+    $default  reduce using rule 35 (EXPRESSION)
+
+
+state 71
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   38           | EXPRESSION tINF EXPRESSION .
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+    tMUL      [reduce using rule 38 (EXPRESSION)]
+    tINF      [reduce using rule 38 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 38 (EXPRESSION)]
+    tADD      [reduce using rule 38 (EXPRESSION)]
+    tSUP      [reduce using rule 38 (EXPRESSION)]
+    tSUB      [reduce using rule 38 (EXPRESSION)]
+    tDIV      [reduce using rule 38 (EXPRESSION)]
+    $default  reduce using rule 38 (EXPRESSION)
+
+
+state 72
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+   40           | EXPRESSION tCOMPARE EXPRESSION .
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+    tMUL      [reduce using rule 40 (EXPRESSION)]
+    tINF      [reduce using rule 40 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 40 (EXPRESSION)]
+    tADD      [reduce using rule 40 (EXPRESSION)]
+    tSUP      [reduce using rule 40 (EXPRESSION)]
+    tSUB      [reduce using rule 40 (EXPRESSION)]
+    tDIV      [reduce using rule 40 (EXPRESSION)]
+    $default  reduce using rule 40 (EXPRESSION)
+
+
+state 73
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   34           | EXPRESSION tADD EXPRESSION .
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tSUP      shift, and go to state 58
+    tDIV      shift, and go to state 60
+
+    tINF      [reduce using rule 34 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 34 (EXPRESSION)]
+    tSUP      [reduce using rule 34 (EXPRESSION)]
+    $default  reduce using rule 34 (EXPRESSION)
+
+
+state 74
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   39           | EXPRESSION tSUP EXPRESSION .
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tADD      shift, and go to state 57
+    tSUP      shift, and go to state 58
+    tSUB      shift, and go to state 59
+    tDIV      shift, and go to state 60
+
+    tMUL      [reduce using rule 39 (EXPRESSION)]
+    tINF      [reduce using rule 39 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 39 (EXPRESSION)]
+    tADD      [reduce using rule 39 (EXPRESSION)]
+    tSUP      [reduce using rule 39 (EXPRESSION)]
+    tSUB      [reduce using rule 39 (EXPRESSION)]
+    tDIV      [reduce using rule 39 (EXPRESSION)]
+    $default  reduce using rule 39 (EXPRESSION)
+
+
+state 75
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   37           | EXPRESSION . tSUB EXPRESSION
+   37           | EXPRESSION tSUB EXPRESSION .
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tMUL      shift, and go to state 54
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tSUP      shift, and go to state 58
+    tDIV      shift, and go to state 60
+
+    tINF      [reduce using rule 37 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 37 (EXPRESSION)]
+    tSUP      [reduce using rule 37 (EXPRESSION)]
+    $default  reduce using rule 37 (EXPRESSION)
+
+
+state 76
+
+   34 EXPRESSION: EXPRESSION . tADD EXPRESSION
+   35           | EXPRESSION . tMUL EXPRESSION
+   36           | EXPRESSION . tDIV EXPRESSION
+   36           | EXPRESSION tDIV EXPRESSION .
+   37           | EXPRESSION . tSUB EXPRESSION
+   38           | EXPRESSION . tINF EXPRESSION
+   39           | EXPRESSION . tSUP EXPRESSION
+   40           | EXPRESSION . tCOMPARE EXPRESSION
+
+    tINF      shift, and go to state 55
+    tCOMPARE  shift, and go to state 56
+    tSUP      shift, and go to state 58
+
+    tINF      [reduce using rule 36 (EXPRESSION)]
+    tCOMPARE  [reduce using rule 36 (EXPRESSION)]
+    tSUP      [reduce using rule 36 (EXPRESSION)]
+    $default  reduce using rule 36 (EXPRESSION)
+
+
+state 77
+
+   29 IFBLOCK1: tIF tOP EXPRESSION @6 tCP . tOB BODY tCB
+
+    tOB  shift, and go to state 85
+
+
+state 78
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION @7 tCP . tOB BODY tCB
+
+    tOB  shift, and go to state 86
+
+
+state 79
+
+    3 S: @1 tINT tMAIN tOP tCP tOB @2 BODY tRETURN INT tPV tCB .
+
+    $default  reduce using rule 3 (S)
+
+
+state 80
+
+   18 CreateVAR: TYPE tVAR tAFFECT tNUMBER tPV .
+
+    $default  reduce using rule 18 (CreateVAR)
+
+
+state 81
+
+   22 SuiteVar: tVAR . @4 tVIRGULE SuiteVar
+   23         | tVAR . tPV
+
+    tPV  shift, and go to state 87
+
+    $default  reduce using rule 21 (@4)
+
+    @4  go to state 88
+
+
+state 82
+
+   20 CreateVAR: TYPE tVAR @3 tVIRGULE SuiteVar .
+
+    $default  reduce using rule 20 (CreateVAR)
+
+
+state 83
+
+   27 IFBLOCK: IFBLOCK1 tELSE @5 tOB BODY . tCB
+
+    tCB  shift, and go to state 89
+
+
+state 84
+
+    8 BODY: tPRINTF tOP tVAR tCP tPV BODY .
+
+    $default  reduce using rule 8 (BODY)
+
+
+state 85
+
+   29 IFBLOCK1: tIF tOP EXPRESSION @6 tCP tOB . BODY tCB
+
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
+
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 90
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
+
+
+state 86
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION @7 tCP tOB . BODY tCB
+
+    tINT     shift, and go to state 10
+    tFLOAT   shift, and go to state 11
+    tBOOL    shift, and go to state 12
+    tPRINTF  shift, and go to state 13
+    tIF      shift, and go to state 14
+    tWHILE   shift, and go to state 15
+    tDOUBLE  shift, and go to state 16
+    tCONST   shift, and go to state 17
+    tVAR     shift, and go to state 18
+
+    $default  reduce using rule 11 (BODY)
+
+    BODY         go to state 91
+    TYPE         go to state 20
+    CreateVAR    go to state 21
+    Affectation  go to state 22
+    IFBLOCK      go to state 23
+    IFBLOCK1     go to state 24
+    WHILEBLOCK   go to state 25
+    WHILEBLOCK1  go to state 26
+
+
+state 87
+
+   23 SuiteVar: tVAR tPV .
+
+    $default  reduce using rule 23 (SuiteVar)
+
+
+state 88
+
+   22 SuiteVar: tVAR @4 . tVIRGULE SuiteVar
+
+    tVIRGULE  shift, and go to state 92
+
+
+state 89
+
+   27 IFBLOCK: IFBLOCK1 tELSE @5 tOB BODY tCB .
+
+    $default  reduce using rule 27 (IFBLOCK)
+
+
+state 90
+
+   29 IFBLOCK1: tIF tOP EXPRESSION @6 tCP tOB BODY . tCB
+
+    tCB  shift, and go to state 93
+
+
+state 91
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION @7 tCP tOB BODY . tCB
+
+    tCB  shift, and go to state 94
+
+
+state 92
+
+   22 SuiteVar: tVAR @4 tVIRGULE . SuiteVar
+
+    tVAR  shift, and go to state 81
+
+    SuiteVar  go to state 95
+
+
+state 93
+
+   29 IFBLOCK1: tIF tOP EXPRESSION @6 tCP tOB BODY tCB .
+
+    $default  reduce using rule 29 (IFBLOCK1)
+
+
+state 94
+
+   32 WHILEBLOCK1: tWHILE tOP EXPRESSION @7 tCP tOB BODY tCB .
+
+    $default  reduce using rule 32 (WHILEBLOCK1)
+
+
+state 95
+
+   22 SuiteVar: tVAR @4 tVIRGULE SuiteVar .
+
+    $default  reduce using rule 22 (SuiteVar)

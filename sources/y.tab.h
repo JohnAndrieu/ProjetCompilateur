@@ -52,30 +52,31 @@
      tFLOAT = 268,
      tMUL = 269,
      tINF = 270,
-     tBOOL = 271,
-     tPRINTF = 272,
-     tIF = 273,
-     tWHILE = 274,
-     tFOR = 275,
-     tRETURN = 276,
-     tCOMPARE = 277,
-     tAFFECT = 278,
-     tADD = 279,
-     tMODULO = 280,
-     tSUP = 281,
-     tDOUBLE = 282,
-     tSHORT = 283,
-     tLONG = 284,
-     tSIGNED = 285,
-     tUNSIGNED = 286,
-     tSTATIC = 287,
-     tTRUE = 288,
-     tFALSE = 289,
-     tSUB = 290,
-     tDIV = 291,
-     tCONST = 292,
-     tVAR = 293,
-     tNUMBER = 294
+     tELSE = 271,
+     tBOOL = 272,
+     tPRINTF = 273,
+     tIF = 274,
+     tWHILE = 275,
+     tFOR = 276,
+     tRETURN = 277,
+     tCOMPARE = 278,
+     tAFFECT = 279,
+     tADD = 280,
+     tMODULO = 281,
+     tSUP = 282,
+     tDOUBLE = 283,
+     tSHORT = 284,
+     tLONG = 285,
+     tSIGNED = 286,
+     tUNSIGNED = 287,
+     tSTATIC = 288,
+     tTRUE = 289,
+     tFALSE = 290,
+     tSUB = 291,
+     tDIV = 292,
+     tCONST = 293,
+     tVAR = 294,
+     tNUMBER = 295
    };
 #endif
 /* Tokens.  */
@@ -92,30 +93,31 @@
 #define tFLOAT 268
 #define tMUL 269
 #define tINF 270
-#define tBOOL 271
-#define tPRINTF 272
-#define tIF 273
-#define tWHILE 274
-#define tFOR 275
-#define tRETURN 276
-#define tCOMPARE 277
-#define tAFFECT 278
-#define tADD 279
-#define tMODULO 280
-#define tSUP 281
-#define tDOUBLE 282
-#define tSHORT 283
-#define tLONG 284
-#define tSIGNED 285
-#define tUNSIGNED 286
-#define tSTATIC 287
-#define tTRUE 288
-#define tFALSE 289
-#define tSUB 290
-#define tDIV 291
-#define tCONST 292
-#define tVAR 293
-#define tNUMBER 294
+#define tELSE 271
+#define tBOOL 272
+#define tPRINTF 273
+#define tIF 274
+#define tWHILE 275
+#define tFOR 276
+#define tRETURN 277
+#define tCOMPARE 278
+#define tAFFECT 279
+#define tADD 280
+#define tMODULO 281
+#define tSUP 282
+#define tDOUBLE 283
+#define tSHORT 284
+#define tLONG 285
+#define tSIGNED 286
+#define tUNSIGNED 287
+#define tSTATIC 288
+#define tTRUE 289
+#define tFALSE 290
+#define tSUB 291
+#define tDIV 292
+#define tCONST 293
+#define tVAR 294
+#define tNUMBER 295
 
 
 
@@ -128,7 +130,7 @@ typedef union YYSTYPE
     char * var;
 }
 /* Line 1529 of yacc.c.  */
-#line 132 "y.tab.h"
+#line 134 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
