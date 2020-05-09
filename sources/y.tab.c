@@ -222,19 +222,19 @@ typedef union YYSTYPE
     }
 
     //Gérer les expressions
-    int expression(int addr1,char * op,int addr2){
+    int expression(int addr1,char * operation,int addr2){
         sprintf(buffer,"%d",get_indice_temp());
-        int addr_return = push_var_temp(buffer,constante,depth);
-        asm_add(op,addr_return,addr1,addr2);
-        return addr_return;
+        int tmpAddr = push_var_temp(buffer,constante,depth);
+        asm_add(operation,tmpAddr,addr1,addr2);
+        return tmpAddr;
     }
 
     //Gérer les affectations temporaires
-    int affectation_tmp(int nb){ 
+    int affectation_tmp(int var){ 
         sprintf(buffer,"%d",get_indice_temp());
-        int tmp_addr = push_var_temp(buffer,constante,depth);
-        asm_add("AFC",tmp_addr,nb,-1);
-        return tmp_addr;
+        int tmpAddr = push_var_temp(buffer,constante,depth);
+        asm_add("AFC",tmpAddr,var,-1);
+        return tmpAddr;
     }
 
 
