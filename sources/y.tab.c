@@ -197,7 +197,7 @@ typedef union YYSTYPE
     int yydebug = 0;
     int depth = 0;
     int constante = 0;
-    char Buffer[50];
+    char buffer[50];
 
     int yylex();
 
@@ -207,46 +207,32 @@ typedef union YYSTYPE
         return 1;
     }
 
+    //Nettoyer le fichier asm.txt
     void clean_assembly () {
         FILE * file_descriptor = fopen("./asm.txt","w");
         fputs("",file_descriptor);
         fclose(file_descriptor);
     }
 
-    void insert_assembly(char * code_assembleur){
-        FILE * file_descriptor = fopen("./asm.txt","a");
-        if(file_descriptor != NULL){
-            fputs(code_assembleur, file_descriptor);
-            fclose(file_descriptor);
-        }
-    }
-
+    //Gérer les affectations 
     void affectation(char * var,int tmpAddr){
         int varAddr  = get_var_address(var,depth);
-        char * ops = malloc(50 * sizeof(char));
-        sprintf(ops,"COP @%d @%d\n",varAddr,tmpAddr);
-        insert_assembly(ops);
         asm_add("COP",varAddr,tmpAddr,-1);
         set_initialized(var, depth);
     }
 
+    //Gérer les expressions
     int expression(int addr1,char * op,int addr2){
-        sprintf(Buffer,"%d",get_indice_temp());
-        int addr_return = push_var_temp(Buffer,constante,depth);
-        printf("%s @ret : %d @exp1 : %d @exp2 : %d\n",op,addr_return,addr1,addr2);
-        char * ops = malloc(50 * sizeof(char));
-        sprintf(ops,"%s @%d @%d @%d\n",op,addr_return,addr1,addr2);
-        insert_assembly(ops);
+        sprintf(buffer,"%d",get_indice_temp());
+        int addr_return = push_var_temp(buffer,constante,depth);
         asm_add(op,addr_return,addr1,addr2);
         return addr_return;
     }
 
+    //Gérer les affectations temporaires
     int affectation_tmp(int nb){ 
-        sprintf(Buffer,"%d",get_indice_temp());
-        int tmp_addr = push_var_temp(Buffer,constante,depth);
-        char * ops = malloc(50 * sizeof(char));
-        sprintf(ops,"AFC @%d %d\n",tmp_addr,nb);
-        insert_assembly(ops);
+        sprintf(buffer,"%d",get_indice_temp());
+        int tmp_addr = push_var_temp(buffer,constante,depth);
         asm_add("AFC",tmp_addr,nb,-1);
         return tmp_addr;
     }
@@ -254,7 +240,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 258 "y.tab.c"
+#line 244 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -558,11 +544,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    97,    97,    97,    97,    99,   100,   103,   104,   105,
-     106,   107,   108,   111,   112,   113,   114,   115,   118,   119,
-     120,   120,   123,   123,   124,   127,   135,   139,   138,   149,
-     148,   156,   163,   162,   170,   174,   179,   184,   189,   193,
-     197,   201,   205,   209
+       0,    83,    83,    83,    83,    85,    86,    89,    90,    91,
+      92,    93,    94,    97,    98,    99,   100,   101,   104,   105,
+     106,   106,   109,   109,   110,   113,   121,   126,   125,   138,
+     137,   147,   154,   153,   161,   165,   170,   175,   180,   184,
+     188,   192,   196,   200
 };
 #endif
 
@@ -1529,92 +1515,92 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 97 "source2.y"
+#line 83 "source2.y"
     {clean_assembly();}
     break;
 
   case 3:
-#line 97 "source2.y"
+#line 83 "source2.y"
     {depth++;}
     break;
 
   case 4:
-#line 97 "source2.y"
-    {depth--; print_assembly(); clearUseless(depth);}
+#line 83 "source2.y"
+    {depth--; write_print_asm(); clearUseless(depth);}
     break;
 
   case 7:
-#line 103 "source2.y"
+#line 89 "source2.y"
     {}
     break;
 
   case 8:
-#line 104 "source2.y"
+#line 90 "source2.y"
     {}
     break;
 
   case 9:
-#line 105 "source2.y"
+#line 91 "source2.y"
     {}
     break;
 
   case 12:
-#line 108 "source2.y"
+#line 94 "source2.y"
     {}
     break;
 
   case 13:
-#line 111 "source2.y"
+#line 97 "source2.y"
     {constante = 0;}
     break;
 
   case 14:
-#line 112 "source2.y"
+#line 98 "source2.y"
     {constante = 0;}
     break;
 
   case 15:
-#line 113 "source2.y"
+#line 99 "source2.y"
     {constante = 0;}
     break;
 
   case 16:
-#line 114 "source2.y"
+#line 100 "source2.y"
     {constante = 0;}
     break;
 
   case 17:
-#line 115 "source2.y"
+#line 101 "source2.y"
     {constante = 1;}
     break;
 
   case 18:
-#line 118 "source2.y"
+#line 104 "source2.y"
     { push_var((yyvsp[(2) - (3)].var),constante,depth); }
     break;
 
   case 19:
-#line 119 "source2.y"
+#line 105 "source2.y"
     { push_var((yyvsp[(2) - (5)].var),constante,depth); affectation((yyvsp[(2) - (5)].var),(yyvsp[(4) - (5)].nb)); }
     break;
 
   case 20:
-#line 120 "source2.y"
+#line 106 "source2.y"
     { push_var((yyvsp[(2) - (2)].var),constante,depth); }
     break;
 
   case 22:
-#line 123 "source2.y"
+#line 109 "source2.y"
     { push_var((yyvsp[(1) - (1)].var),constante,depth); }
     break;
 
   case 24:
-#line 124 "source2.y"
+#line 110 "source2.y"
     { push_var((yyvsp[(1) - (2)].var),constante,depth); }
     break;
 
   case 25:
-#line 128 "source2.y"
+#line 114 "source2.y"
     { 
                     affectation((yyvsp[(1) - (4)].var),(yyvsp[(3) - (4)].nb)); 
                     clear_var_temp();
@@ -1622,113 +1608,118 @@ yyreduce:
     break;
 
   case 26:
-#line 136 "source2.y"
-    {modify_asm_jmf_at_line((yyvsp[(1) - (1)].nb), get_next_line()); // on veut que JMF saute ici, la fin de if-(sans else)
+#line 122 "source2.y"
+    {
+            modify_asm_jmf_at_line((yyvsp[(1) - (1)].nb), get_next_line()); // on veut que JMF saute ici, la fin de if-(sans else)
         }
     break;
 
   case 27:
-#line 139 "source2.y"
-    {(yyvsp[(2) - (2)].nb) = asm_add("JMP", -1, -1, -1);                     // la fin de if, on veut sauter à la fin de else (ligneY)
-        modify_asm_jmf_at_line((yyvsp[(1) - (2)].nb), get_next_line()+1);  // ligneX, le début de else, on veut que JMF saute ici.
+#line 126 "source2.y"
+    {
+            (yyvsp[(2) - (2)].nb) = asm_add("JMP", -1, -1, -1);                     // la fin de if, on veut sauter à la fin de else (ligneY)
+            modify_asm_jmf_at_line((yyvsp[(1) - (2)].nb), get_next_line()+1);  // ligneX, le début de else, on veut que JMF saute ici.
         }
     break;
 
   case 28:
-#line 143 "source2.y"
-    {modify_asm_jmp_at_line((yyvsp[(2) - (6)].nb), get_next_line()+1); // ligneY, la fin de else
+#line 131 "source2.y"
+    {
+            modify_asm_jmp_at_line((yyvsp[(2) - (6)].nb), get_next_line()+1); // ligneY, la fin de else
         }
     break;
 
   case 29:
-#line 149 "source2.y"
-    {(yyvsp[(1) - (3)].nb) = asm_add("JMF", (yyvsp[(3) - (3)].nb),-1, -1);     // on renvoie la ligne JMF; on veut sauter à la fin de if (ligneX)
+#line 138 "source2.y"
+    {
+            (yyvsp[(1) - (3)].nb) = asm_add("JMF", (yyvsp[(3) - (3)].nb),-1, -1);     // on renvoie la ligne JMF; on veut sauter à la fin de if (ligneX)
         }
     break;
 
   case 30:
-#line 152 "source2.y"
-    {(yyval.nb) = (yyvsp[(1) - (8)].nb); // on ne peut qu’affecter $$ à la fin d'une règle
+#line 142 "source2.y"
+    {
+            (yyval.nb) = (yyvsp[(1) - (8)].nb); // on ne peut qu’affecter $$ à la fin d'une règle
         }
     break;
 
   case 31:
-#line 157 "source2.y"
+#line 148 "source2.y"
     {asm_add("JMP", (yyvsp[(1) - (1)].nb), -1, -1);    // la fin du while, on veut sauter au début du while (ligneY)
             modify_asm_jmf_at_line((yyvsp[(1) - (1)].nb), get_next_line()+1);  // ligneX, la suite du programme, on veut que JMF saute ici.
             }
     break;
 
   case 32:
-#line 163 "source2.y"
+#line 154 "source2.y"
     {(yyvsp[(1) - (3)].nb) = asm_add("JMF", (yyvsp[(3) - (3)].nb),-1, -1);     // on renvoie la ligne JMF; on veut sauter au début du while (ligneX)
                 }
     break;
 
   case 33:
-#line 166 "source2.y"
+#line 157 "source2.y"
     {(yyval.nb) = (yyvsp[(1) - (8)].nb); // on ne peut qu’affecter $$ à la fin d'une règle
                 }
     break;
 
   case 34:
-#line 171 "source2.y"
+#line 162 "source2.y"
     {
                     (yyval.nb) = (yyvsp[(2) - (3)].nb);
                 }
     break;
 
   case 35:
-#line 175 "source2.y"
+#line 166 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"ADD",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 36:
-#line 180 "source2.y"
+#line 171 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"MUL",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 37:
-#line 185 "source2.y"
+#line 176 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"DIV",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 38:
-#line 190 "source2.y"
+#line 181 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"DIFF",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 39:
-#line 194 "source2.y"
+#line 185 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"INF",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 40:
-#line 198 "source2.y"
+#line 189 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"SUP",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 41:
-#line 202 "source2.y"
+#line 193 "source2.y"
     {
                     (yyval.nb) = expression((yyvsp[(1) - (3)].nb),"EQU",(yyvsp[(3) - (3)].nb));
                 }
     break;
 
   case 42:
-#line 205 "source2.y"
+#line 196 "source2.y"
     { 
                     int addr_var_tmp = affectation_tmp((yyvsp[(1) - (1)].nb));
                     (yyval.nb) = addr_var_tmp; 
@@ -1736,7 +1727,7 @@ yyreduce:
     break;
 
   case 43:
-#line 209 "source2.y"
+#line 200 "source2.y"
     { 
                     (yyval.nb) = get_var_address((yyvsp[(1) - (1)].var), depth); 
                 }
@@ -1744,7 +1735,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1748 "y.tab.c"
+#line 1739 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1958,7 +1949,7 @@ yyreturn:
 }
 
 
-#line 214 "source2.y"
+#line 205 "source2.y"
 
 
 int main () { 

@@ -1,5 +1,6 @@
 #include "symbol.h"
 
+//Ajouter un symbole
 int push_var(char *id, int cons, int depth)
 {
     printf("symbol : %s à l'addresse : %d\n",id,idSymbol);
@@ -12,6 +13,7 @@ int push_var(char *id, int cons, int depth)
     return idSymbol-1;
 }
 
+//Ajouter un symbole
 int push_var_temp(char * id, int cons, int depth)
 {
     struct symbol * new_symbol = &(symbolTable[idSymbolTemp]);
