@@ -26,14 +26,17 @@ int push_var_temp(char * id, int cons, int depth)
     return idSymbolTemp+1;
 }
 
+//Supprimer le dernier symbole temporaire ajouté
 void pop_var_temp() {
     idSymbol--;
 }
 
+//Supprimer entièrement les symboles temporaires
 void clear_var_temp(){
     idSymbolTemp = 255;
 }
 
+//Récupérer l'adresse d'un symbole
 int get_var_address(char * id, int depth)
 {
     for(int i=0 ; i < idSymbol ; i++)
@@ -48,18 +51,21 @@ int get_var_address(char * id, int depth)
     exit(-2);  
 }
 
+//Tester l'initialisation d'un symbole
 int is_initialized(char * id, int depth)
 {
     int addr = get_var_address(id, depth);
     return symbolTable[addr].init;
 }
 
+//Signalé un symbole initialisé
 void set_initialized(char * id, int depth)
 {
     int addr = get_var_address(id, depth);
     symbolTable[addr].init = 1;
 }
 
+//Supprimer les symboles inutiles si on change de profondeur
 void clearUseless(int depth)
 {
     struct symbol * last = &(symbolTable[idSymbol]);
@@ -75,10 +81,12 @@ void clearUseless(int depth)
     }
 }
 
+//Récupérer l'indice courant des symboles temporaires
 int get_indice_temp(){
     return idSymbolTemp;
 }
 
+//Récupérer l'indice courant des symboles
 int get_indice(){
     return idSymbolTemp;
 }
