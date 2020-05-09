@@ -3,5 +3,8 @@
 #### Useful command line:
 
 ```
-./comp < hello.c  2>&1 | grep Read
+git clone https://github.com/JohnAndrieu/ProjetCompilateur
+cd ProjetCompilateur/sources
+make
+./comp < hello.c OR ./comp < hello.c  2>&1 | grep Read
 ```
