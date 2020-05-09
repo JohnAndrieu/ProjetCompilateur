@@ -17,54 +17,52 @@
     int yylex();
 
     int yyerror(char *e) {
-        printf("err: %s\n", e);
+        printf("error: %s\n", e);
         exit(2);
         return 1;
     }
 
-    void clean_file () {
-        FILE * fichier = fopen("./asm.txt","w");
-        fputs("",fichier);
-        fclose(fichier);
+    void clean_assembly () {
+        FILE * file_descriptor = fopen("./asm.txt","w");
+        fputs("",file_descriptor);
+        fclose(file_descriptor);
     }
 
-    void insert_file(char * code_assembleur){
-        FILE * fichier = fopen("./asm.txt","a");
-        if(fichier != NULL){
-            fputs(code_assembleur, fichier);
-            fclose(fichier);
+    void insert_assembly(char * code_assembleur){
+        FILE * file_descriptor = fopen("./asm.txt","a");
+        if(file_descriptor != NULL){
+            fputs(code_assembleur, file_descriptor);
+            fclose(file_descriptor);
         }
     }
 
     void affectation(char * var,int tmpAddr){
-        int varAddr  = get_address(var,depth);
+        int varAddr  = get_var_address(var,depth);
         char * ops = malloc(50 * sizeof(char));
         sprintf(ops,"COP @%d @%d\n",varAddr,tmpAddr);
-        insert_file(ops);
-        add_asm("COP",varAddr,tmpAddr,-1);
+        insert_assembly(ops);
+        asm_add("COP",varAddr,tmpAddr,-1);
         set_initialized(var, depth);
     }
 
-    int operation(int addr1,char * op,int addr2){
+    int expression(int addr1,char * op,int addr2){
         sprintf(Buffer,"%d",get_indice_temp());
-        int addr_return = push_tmp_symbol(Buffer,constante,depth);
+        int addr_return = push_var_temp(Buffer,constante,depth);
         printf("%s @ret : %d @exp1 : %d @exp2 : %d\n",op,addr_return,addr1,addr2);
-
         char * ops = malloc(50 * sizeof(char));
         sprintf(ops,"%s @%d @%d @%d\n",op,addr_return,addr1,addr2);
-
-        insert_file(ops);
-        add_asm(op,addr_return,addr1,addr2);
+        insert_assembly(ops);
+        asm_add(op,addr_return,addr1,addr2);
         return addr_return;
     }
 
-    int tmp_affec(int nb){ 
+    int affectation_tmp(int nb){ 
         sprintf(Buffer,"%d",get_indice_temp());
-        int tmp_addr = push_tmp_symbol(Buffer,constante,depth);
+        int tmp_addr = push_var_temp(Buffer,constante,depth);
         char * ops = malloc(50 * sizeof(char));
         sprintf(ops,"AFC @%d %d\n",tmp_addr,nb);
-        insert_file(ops);
-        add_asm("AFC",tmp_addr,nb,-1);
+        insert_assembly(ops);
+        asm_add("AFC",tmp_addr,nb,-1);
         return tmp_addr;
     }
 
@@ -96,7 +94,7 @@
 
 %%
 
-S: {clean_file();} tINT tMAIN tOP tCP tOB {depth++;} BODY tRETURN INT tPV tCB {depth--; print_assembly(); clearUseless(depth);};
+S: {clean_assembly();} tINT tMAIN tOP tCP tOB {depth++;} BODY tRETURN INT tPV tCB {depth--; print_assembly(); clearUseless(depth);};
 
 INT: tVAR
     | tNUMBER
@@ -117,38 +115,38 @@ TYPE: tINT {constante = 0;}
     | tCONST {constante = 1;}
     ;
 
-CreateVAR: TYPE tVAR tPV { push_symbol($2,constante,depth); }
-    | TYPE tVAR tAFFECT tNUMBER tPV { push_symbol($2,constante,depth); affectation($2,$4); }  
-    | TYPE tVAR { push_symbol($2,constante,depth); } tVIRGULE SuiteVar
+CreateVAR: TYPE tVAR tPV { push_var($2,constante,depth); }
+    | TYPE tVAR tAFFECT tNUMBER tPV { push_var($2,constante,depth); affectation($2,$4); }  
+    | TYPE tVAR { push_var($2,constante,depth); } tVIRGULE SuiteVar
     ;
 
-SuiteVar: tVAR { push_symbol($1,constante,depth); } tVIRGULE SuiteVar 
-    | tVAR tPV { push_symbol($1,constante,depth); }
+SuiteVar: tVAR { push_var($1,constante,depth); } tVIRGULE SuiteVar 
+    | tVAR tPV { push_var($1,constante,depth); }
     ;
 
 Affectation: tVAR tAFFECT EXPRESSION tPV 
                 { 
                     affectation($1,$3); 
-                    clear_tmp_symbol();
+                    clear_var_temp();
                 }
                 ;
 
 IFBLOCK:
     IFBLOCK1
-        {patch_JMF($1, get_nb_line_asm()); // on veut que JMF saute ici, la fin de if-(sans else)
+        {modify_asm_jmf_at_line($1, get_next_line()); // on veut que JMF saute ici, la fin de if-(sans else)
         }
     | IFBLOCK1 tELSE
-        {$2 = add_asm("JMP", -1, -1, -1);                     // la fin de if, on veut sauter à la fin de else (ligneY)
-        patch_JMF($1, get_nb_line_asm()+1);  // ligneX, le début de else, on veut que JMF saute ici.
+        {$2 = asm_add("JMP", -1, -1, -1);                     // la fin de if, on veut sauter à la fin de else (ligneY)
+        modify_asm_jmf_at_line($1, get_next_line()+1);  // ligneX, le début de else, on veut que JMF saute ici.
         }
     tOB BODY tCB
-        {patch_JMP($2, get_nb_line_asm()+1); // ligneY, la fin de else
+        {modify_asm_jmp_at_line($2, get_next_line()+1); // ligneY, la fin de else
         }
     ;
 
 IFBLOCK1:
     tIF tOP EXPRESSION
-        {$1 = add_asm("JMF", $3,-1, -1);     // on renvoie la ligne JMF; on veut sauter à la fin de if (ligneX)
+        {$1 = asm_add("JMF", $3,-1, -1);     // on renvoie la ligne JMF; on veut sauter à la fin de if (ligneX)
         }
     tCP tOB BODY tCB
         {$$ = $1; // on ne peut qu’affecter $$ à la fin d'une règle
@@ -156,13 +154,13 @@ IFBLOCK1:
     ;
 
 WHILEBLOCK: WHILEBLOCK1 
-            {add_asm("JMP", $1, -1, -1);    // la fin du while, on veut sauter au début du while (ligneY)
-            patch_JMF($1, get_nb_line_asm()+1);  // ligneX, la suite du programme, on veut que JMF saute ici.
+            {asm_add("JMP", $1, -1, -1);    // la fin du while, on veut sauter au début du while (ligneY)
+            modify_asm_jmf_at_line($1, get_next_line()+1);  // ligneX, la suite du programme, on veut que JMF saute ici.
             }
             ;
 
 WHILEBLOCK1:tWHILE tOP EXPRESSION 
-                {$1 = add_asm("JMF", $3,-1, -1);     // on renvoie la ligne JMF; on veut sauter au début du while (ligneX)
+                {$1 = asm_add("JMF", $3,-1, -1);     // on renvoie la ligne JMF; on veut sauter au début du while (ligneX)
                 }
             tCP tOB BODY tCB
                 {$$ = $1; // on ne peut qu’affecter $$ à la fin d'une règle
@@ -175,41 +173,41 @@ EXPRESSION: tOP EXPRESSION tCP
                 }
     |EXPRESSION tADD EXPRESSION
                 {
-                    $$ = operation($1,"ADD",$3);
+                    $$ = expression($1,"ADD",$3);
                 }
 
     |EXPRESSION tMUL EXPRESSION 
                 {
-                    $$ = operation($1,"MUL",$3);
+                    $$ = expression($1,"MUL",$3);
                 }
 
     |EXPRESSION tDIV EXPRESSION
                 {
-                    $$ = operation($1,"DIV",$3);
+                    $$ = expression($1,"DIV",$3);
                 } 
 
     |EXPRESSION tSUB EXPRESSION 
                 {
-                    $$ = operation($1,"DIFF",$3);
+                    $$ = expression($1,"DIFF",$3);
                 }
     |EXPRESSION tINF EXPRESSION  
                 {
-                    $$ = operation($1,"INF",$3);
+                    $$ = expression($1,"INF",$3);
                 }
     |EXPRESSION tSUP EXPRESSION  
                 {
-                    $$ = operation($1,"SUP",$3);
+                    $$ = expression($1,"SUP",$3);
                 }
-    |EXPRESSION tCOMPARE EXPRESSION 
+    |EXPRESSION tCOMPARE EXPRESSION
                 {
-                    $$ = operation($1,"EQU",$3);
+                    $$ = expression($1,"EQU",$3);
                 }
     | tNUMBER   { 
-                    int addr_tmp = tmp_affec($1);
-                    $$ = addr_tmp; 
+                    int addr_var_tmp = affectation_tmp($1);
+                    $$ = addr_var_tmp; 
                 } 
     | tVAR      { 
-                    $$ = get_address($1, depth); 
+                    $$ = get_var_address($1, depth); 
                 }
     ;
 

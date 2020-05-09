@@ -17,11 +17,11 @@ struct symbol {
 
 struct symbol symbolTable [256];
 
-int push_symbol(char *, int , int);
-void pop_symbol();
-int push_tmp_symbol(char *, int, int);
-void clear_tmp_symbol();
-int get_address(char *, int);
+int push_var(char *, int , int);
+void pop_var_temp();
+int push_var_temp(char *, int, int);
+void clear_var_temp();
+int get_var_address(char *, int);
 void set_initialized(char *, int);
 int is_initialized(char *, int);
 void clearUseless(int);

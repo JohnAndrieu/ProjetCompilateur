@@ -6,9 +6,10 @@ int main(){
     printf (i);
     r=(i+j)*(i+k/j);
     printf ( r );
-    while(k < 11) {
-        k = k + 1;
+    if(i == 3){
+        i = 0;
+    } else {
+        i = i + 5;
     }
-    i = i + 5;
     return 0;
 }
