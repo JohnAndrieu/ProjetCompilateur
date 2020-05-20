@@ -17,7 +17,7 @@ make
 ./comp < hello.c  2>&1 | grep Read
 ```
 
-## Avancee
+## Avancée
 
 - Analyse lexicale et communication des tokens et leur valeur vers yacc		- OK
 
